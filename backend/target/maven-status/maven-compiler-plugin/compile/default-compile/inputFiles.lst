@@ -1,0 +1,13 @@
+D:\projects\mcx-live-rates\backend\src\main\java\com\vibullion\backend\BackendApplication.java
+D:\projects\mcx-live-rates\backend\src\main\java\com\vibullion\backend\config\GenericConfig.java
+D:\projects\mcx-live-rates\backend\src\main\java\com\vibullion\backend\config\GlobalCorsConfig.java
+D:\projects\mcx-live-rates\backend\src\main\java\com\vibullion\backend\controller\McxRatesController.java
+D:\projects\mcx-live-rates\backend\src\main\java\com\vibullion\backend\dto\McxRatesDto.java
+D:\projects\mcx-live-rates\backend\src\main\java\com\vibullion\backend\dto\UserDetailsDto.java
+D:\projects\mcx-live-rates\backend\src\main\java\com\vibullion\backend\entity\LiveRateConfig.java
+D:\projects\mcx-live-rates\backend\src\main\java\com\vibullion\backend\entity\UserDetails.java
+D:\projects\mcx-live-rates\backend\src\main\java\com\vibullion\backend\enums\Symbol.java
+D:\projects\mcx-live-rates\backend\src\main\java\com\vibullion\backend\properties\LiveRateApi.java
+D:\projects\mcx-live-rates\backend\src\main\java\com\vibullion\backend\repository\LiveRateConfigRepository.java
+D:\projects\mcx-live-rates\backend\src\main\java\com\vibullion\backend\repository\UserDetailsRepository.java
+D:\projects\mcx-live-rates\backend\src\main\java\com\vibullion\backend\service\McxRateConfigService.java

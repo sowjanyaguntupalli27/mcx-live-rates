@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3309/mcx_db
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: mcx_user
+    password: Test1234!
+  liquibase:
+    user: mcx_user
+    password: Test1234!
+    liquibase-schema: mcx_db
+    parameters:
+      datasourceUserName: mcx_user
+      datasourcePassword: Test1234!
+      schemaName: mcx_db
+    drop-first: false

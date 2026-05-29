@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+
+    <!-- Rules:
+        1) the changes are added sequentially, incremental changes
+        2) changes are split into DDL and DML
+        3) each change has a separate file with V{Number}__[DDL|DML]_{changeName}.sql and header comment of the change
+    -->
+
+    <!-- DDL CHANGES -->
+    <include file="DDL/V0__DDL_init.sql" relativeToChangelogFile="true"/>
+
+
+    <!-- DML CHANGES -->
+    <include file="DML/V0__DML_init_data.sql" relativeToChangelogFile="true"/>
+
+
+    <!-- THE LAST CHANGESET -->
+
+</databaseChangeLog>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DiffGenerationConfig">
+    <option name="sourceModelValue" value="backend:backend" />
+    <option name="targetDbValue" value="d95803df-4173-4f87-aad7-5a6f6cbecb12" />
+    <option name="updateDbConnectionName" value="d95803df-4173-4f87-aad7-5a6f6cbecb12" />
+  </component>
+</project>
