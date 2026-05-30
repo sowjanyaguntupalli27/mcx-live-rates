@@ -23,3 +23,5 @@ com:
     mcx-rates:
       url: https://starlineapi.in/getrates
     build: @project.version@
+server:
+  port: 8082
