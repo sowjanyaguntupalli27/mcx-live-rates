@@ -39,31 +39,35 @@ public class McxRateConfigService {
         String url = UriComponentsBuilder.fromUriString(this.liveRateApi.getUrl())
                 .toUriString();
 
-        var result = this.restTemplate.exchange(
-                url,
-                HttpMethod.GET,
-                new HttpEntity<>(new HttpHeaders()),
-                new ParameterizedTypeReference<List<McxRatesDto>>() {}
-        );
-
-        List<McxRatesDto> ratesList = result.getBody();
         List<McxRatesDto> separateResultList = new ArrayList<>();
+        try {
+            var result = this.restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    new HttpEntity<>(new HttpHeaders()),
+                    new ParameterizedTypeReference<List<McxRatesDto>>() {}
+            );
 
-        if (ratesList != null) {
-            McxRatesDto goldRate = ratesList.stream()
-                    .filter(rate -> "GOLD".equalsIgnoreCase(rate.getSymbol()))
-                    .findFirst()
-                    .orElse(null);
-            McxRatesDto silverRate = ratesList.stream()
-                    .filter(rate -> "SILVER".equalsIgnoreCase(rate.getSymbol()))
-                    .findFirst()
-                    .orElse(null);
-            if (goldRate != null) {
-                separateResultList.add(goldRate);
+            List<McxRatesDto> ratesList = result.getBody();
+
+            if (ratesList != null) {
+                McxRatesDto goldRate = ratesList.stream()
+                        .filter(rate -> "GOLD".equalsIgnoreCase(rate.getSymbol()))
+                        .findFirst()
+                        .orElse(null);
+                McxRatesDto silverRate = ratesList.stream()
+                        .filter(rate -> "SILVER".equalsIgnoreCase(rate.getSymbol()))
+                        .findFirst()
+                        .orElse(null);
+                if (goldRate != null) {
+                    separateResultList.add(goldRate);
+                }
+                if (silverRate != null) {
+                    separateResultList.add(silverRate);
+                }
             }
-            if (silverRate != null) {
-                separateResultList.add(silverRate);
-            }
+        } catch (Exception e) {
+            System.err.println("Failed to fetch live rates from API: " + e.getMessage());
         }
 
         return separateResultList;
