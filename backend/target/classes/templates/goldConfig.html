@@ -372,52 +372,48 @@
     </div>
 </div>
 
+<script>
 
+    const PRICE_CACHE = {
+                            goldAsk: null,
+                            silverAsk: null,
+                            prevGoldAsk: null,
+                            prevSilverAsk: null
+                        };
 
+        const formatCurrency = (value) => {
+            return new Intl.NumberFormat('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
+        };
 
-            <script>
+        function switchConfigTab(event, targetPanelId) {
+            event.preventDefault();
 
-                const PRICE_CACHE = {
-                goldAsk: null,
-                silverAsk: null,
-                prevGoldAsk: null,
-                prevSilverAsk: null
-            };
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            tabButtons.forEach(btn => btn.classList.remove('active-tab'));
 
-                const formatCurrency = (value) => {
-                return new Intl.NumberFormat('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
-            };
+            const tabPanels = document.querySelectorAll('.tab-panel');
+            tabPanels.forEach(panel => panel.classList.remove('active-panel'));
 
-                function switchConfigTab(event, targetPanelId) {
-                event.preventDefault();
+            event.currentTarget.classList.add('active-tab');
+            document.getElementById(targetPanelId).classList.add('active-panel');
+        }
 
-                const tabButtons = document.querySelectorAll('.tab-btn');
-                tabButtons.forEach(btn => btn.classList.remove('active-tab'));
-
-                const tabPanels = document.querySelectorAll('.tab-panel');
-                tabPanels.forEach(panel => panel.classList.remove('active-panel'));
-
-                event.currentTarget.classList.add('active-tab');
-                document.getElementById(targetPanelId).classList.add('active-panel');
-            }
-
-                const generateDifferenceHtml = (newPrice, oldPrice) => {
-                if (oldPrice === null || oldPrice === undefined || newPrice === oldPrice) {
+        const generateDifferenceHtml = (newPrice, oldPrice) => {
+            if (oldPrice === null || oldPrice === undefined || newPrice === oldPrice) {
                 return `<span class="trend-badge trend-neutral">Unchanged</span>`;
             }
+            const difference = newPrice - oldPrice;
+            const formattedDiff = formatCurrency(Math.abs(difference));
 
-                const difference = newPrice - oldPrice;
-                const formattedDiff = formatCurrency(Math.abs(difference));
-
-                if (difference > 0) {
+            if (difference > 0) {
                 return `<span class="trend-badge trend-up">▲ +₹${formattedDiff}</span>`;
             } else {
                 return `<span class="trend-badge trend-down">▼ -₹${formattedDiff}</span>`;
             }
-            };
+        };
 
-                const fetchLivePriceData = async () => {
-                try {
+        const fetchLivePriceData = async () => {
+            try {
                 const response = await fetch('/mcxRates');
                 if (!response.ok) throw new Error('Network bridge interface dropped');
                 const data = await response.json();
@@ -426,213 +422,205 @@
                 const silverDisplay = document.getElementById('silver-current-ask');
 
                 if (Array.isArray(data) && data.length > 0) {
-                const goldRecord = data.find(item => item && item.symbol && item.symbol.toLowerCase() === 'gold');
-                const silverRecord = data.find(item => item && item.symbol && item.symbol.toLowerCase() === 'silver');
+                    const goldRecord = data.find(item => item && item.symbol && item.symbol.toLowerCase() === 'gold');
+                    const silverRecord = data.find(item => item && item.symbol && item.symbol.toLowerCase() === 'silver');
 
-                if (goldRecord && goldRecord.Ask !== undefined && goldRecord.Ask !== null) {
-                if (PRICE_CACHE.goldAsk !== null && PRICE_CACHE.goldAsk !== goldRecord.Ask) {
-                PRICE_CACHE.prevGoldAsk = PRICE_CACHE.goldAsk; // Cache older state
-            }
-                PRICE_CACHE.goldAsk = goldRecord.Ask;
-            }
+                    if (goldRecord && goldRecord.Ask !== undefined && goldRecord.Ask !== null) {
+                        if (PRICE_CACHE.goldAsk !== null && PRICE_CACHE.goldAsk !== goldRecord.Ask) {
+                            PRICE_CACHE.prevGoldAsk = PRICE_CACHE.goldAsk; // Cache older state
+                        }
+                        PRICE_CACHE.goldAsk = goldRecord.Ask;
+                    }
 
-                if (goldDisplay && PRICE_CACHE.goldAsk !== null) {
-                const trendHtml = generateDifferenceHtml(PRICE_CACHE.goldAsk, PRICE_CACHE.prevGoldAsk);
-                goldDisplay.innerHTML = `₹${formatCurrency(PRICE_CACHE.goldAsk)} ${trendHtml}`;
-            } else if (goldDisplay) {
-                goldDisplay.innerText = "Unavailable";
-            }
+                    if (goldDisplay && PRICE_CACHE.goldAsk !== null) {
+                        const trendHtml = generateDifferenceHtml(PRICE_CACHE.goldAsk, PRICE_CACHE.prevGoldAsk);
+                        goldDisplay.innerHTML = `₹${formatCurrency(PRICE_CACHE.goldAsk)} ${trendHtml}`;
+                    } else if (goldDisplay) {
+                        goldDisplay.innerText = "Unavailable";
+                    }
 
-                if (silverRecord && silverRecord.Ask !== undefined && silverRecord.Ask !== null) {
-                if (PRICE_CACHE.silverAsk !== null && PRICE_CACHE.silverAsk !== silverRecord.Ask) {
-                PRICE_CACHE.prevSilverAsk = PRICE_CACHE.silverAsk; // Cache older state
-            }
-                PRICE_CACHE.silverAsk = silverRecord.Ask;
-            }
+                    if (silverRecord && silverRecord.Ask !== undefined && silverRecord.Ask !== null) {
+                        if (PRICE_CACHE.silverAsk !== null && PRICE_CACHE.silverAsk !== silverRecord.Ask) {
+                            PRICE_CACHE.prevSilverAsk = PRICE_CACHE.silverAsk;
+                        }
+                        PRICE_CACHE.silverAsk = silverRecord.Ask;
+                    }
 
-                if (silverDisplay && PRICE_CACHE.silverAsk !== null) {
-                const trendHtml = generateDifferenceHtml(PRICE_CACHE.silverAsk, PRICE_CACHE.prevSilverAsk);
-                silverDisplay.innerHTML = `₹${formatCurrency(PRICE_CACHE.silverAsk)} ${trendHtml}`;
-            } else if (silverDisplay) {
-                silverDisplay.innerText = "Unavailable";
-            }
-            } else {
-                renderCachedFallback();
-            }
+                    if (silverDisplay && PRICE_CACHE.silverAsk !== null) {
+                        const trendHtml = generateDifferenceHtml(PRICE_CACHE.silverAsk, PRICE_CACHE.prevSilverAsk);
+                        silverDisplay.innerHTML = `₹${formatCurrency(PRICE_CACHE.silverAsk)} ${trendHtml}`;
+                    } else if (silverDisplay) {
+                        silverDisplay.innerText = "Unavailable";
+                    }
+                } else {
+                    renderCachedFallback();
+                }
 
-            } catch (error) {
+            }
+            catch (error) {
                 console.warn('Network issue caught. Retaining previous price figures locally:', error);
                 renderCachedFallback();
             }
-            };
+        };
 
-                const renderCachedFallback = () => {
-                const goldDisplay = document.getElementById('gold-current-ask');
-                const silverDisplay = document.getElementById('silver-current-ask');
+        const renderCachedFallback = () => {
+            const goldDisplay = document.getElementById('gold-current-ask');
+            const silverDisplay = document.getElementById('silver-current-ask');
 
-                if (goldDisplay && PRICE_CACHE.goldAsk !== null) {
+            if (goldDisplay && PRICE_CACHE.goldAsk !== null) {
                 const trendHtml = generateDifferenceHtml(PRICE_CACHE.goldAsk, PRICE_CACHE.prevGoldAsk);
                 goldDisplay.innerHTML = `₹${formatCurrency(PRICE_CACHE.goldAsk)} ${trendHtml}`;
             } else if (goldDisplay && goldDisplay.innerText === "Fetching...") {
                 goldDisplay.innerText = "Offline";
             }
 
-                if (silverDisplay && PRICE_CACHE.silverAsk !== null) {
-                    const trendHtml = generateDifferenceHtml(PRICE_CACHE.silverAsk, PRICE_CACHE.prevSilverAsk);
-                    silverDisplay.innerHTML = `₹${formatCurrency(PRICE_CACHE.silverAsk)} ${trendHtml}`;
-                } else if (silverDisplay && silverDisplay.innerText === "Fetching...") {
-                    silverDisplay.innerText = "Offline";
+            if (silverDisplay && PRICE_CACHE.silverAsk !== null) {
+                const trendHtml = generateDifferenceHtml(PRICE_CACHE.silverAsk, PRICE_CACHE.prevSilverAsk);
+                silverDisplay.innerHTML = `₹${formatCurrency(PRICE_CACHE.silverAsk)} ${trendHtml}`;
+            } else if (silverDisplay && silverDisplay.innerText === "Fetching...") {
+                silverDisplay.innerText = "Offline";
+            }
+        };
+
+        const loadExistingConfigurations = async () => {
+            const configurations = [{ symbol: 'GOLD', inputId: 'gold-spread' }, { symbol: 'SILVER', inputId: 'silver-spread' }];
+
+            for (const config of configurations) {
+                const inputElement = document.getElementById(config.inputId);
+                if (!inputElement) continue;
+                try {
+                    const response = await fetch(`/api/config/${config.symbol}`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data && data.spreadCharges !== undefined && data.spreadCharges !== null) {
+                            inputElement.value = data.spreadCharges;
+                        }
+                    }
+                } catch (error) {
+                    console.error(`Could not look up initial config configurations for ${config.symbol}:`, error);
                 }
-            };
+            }
+        };
 
-                // --- CHANGED/ADDED: Load existing configurations from DB on start ---
-                const loadExistingConfigurations = async () => {
-                    const configurations = [
-                        { symbol: 'GOLD', inputId: 'gold-spread' },
-                        { symbol: 'SILVER', inputId: 'silver-spread' }
-                        ];
+        const initialize = () => {
+            const forms = document.querySelectorAll('form[action*="setupGoldPrice"], form[action*="setupSilverPrice"], form[action*="api/config"]');
+            forms.forEach(form => {
+                let isOtpSent = false;
+                let statusMessage = form.querySelector('.form-status-message');
+                if (!statusMessage) {
+                    statusMessage = document.createElement('div');
+                    statusMessage.className = 'form-status-message';
+                    statusMessage.style.fontSize = '0.9rem';
+                    statusMessage.style.fontWeight = '700';
+                    statusMessage.style.textAlign = 'center';
+                    statusMessage.style.marginTop = '1rem';
+                    statusMessage.style.display = 'none';
+                    form.insertBefore(statusMessage, form.querySelector('.btn-submit'));
+                }
 
-                        for (const config of configurations) {
-                            const inputElement = document.getElementById(config.inputId);
-                            if (!inputElement) continue;
-                            try {
-                                const response = await fetch(`/api/config/${config.symbol}`);
-                                if (response.ok) {
-                                    const data = await response.json();
-                                    if (data && data.spreadCharges !== undefined && data.spreadCharges !== null) {
-                                        inputElement.value = data.spreadCharges;
-                                    }
-                                }
-                            } catch (error) {
-                                console.error(`Could not look up initial config configurations for ${config.symbol}:`, error);
-                            }
+                form.addEventListener('submit', async (event) => {
+                    event.preventDefault();
+                    statusMessage.style.display = 'none';
+                    statusMessage.innerText = '';
+                    const submitBtn = form.querySelector('.btn-submit');
+                    const originalText = submitBtn ? submitBtn.innerText : 'Save Config';
+                    let otpContainer = form.querySelector('.otp-container');
+                    if (!otpContainer) {
+                        otpContainer = document.createElement('div');
+                        otpContainer.className = 'form-group otp-container';
+                        otpContainer.style.display = 'none';
+                        otpContainer.style.marginTop = '1rem';
+                        otpContainer.innerHTML = `
+                        <label class="form-label" style="color: var(--red-text); font-weight: bold;">Enter Verification OTP</label>
+                        <input type="text" inputmode="numeric" pattern="[0-9]*" name="otp" class="form-input otp-input" placeholder="000000" required>`;
+                        form.insertBefore(otpContainer, statusMessage);
+                    }
+                    const otpInput = otpContainer.querySelector('.otp-input');
+
+                    // PHASE 1: Send OTP request
+                    if (!isOtpSent) {
+                        if (submitBtn) {
+                            submitBtn.innerText = 'Sending OTP...';
+                            submitBtn.disabled = true;
                         }
-                };
 
-                const initializeFormHandlers = () => {
-                    const forms = document.querySelectorAll('form[action*="setupGoldPrice"], form[action*="setupSilverPrice"], form[action*="api/config"]');
+                        try {
+                            const otpResponse = await fetch('/api/config/otp');
 
-                    forms.forEach(form => {
-                        let isOtpSent = false;
-                        let statusMessage = form.querySelector('.form-status-message');
-                        if (!statusMessage) {
-                            statusMessage = document.createElement('div');
-                            statusMessage.className = 'form-status-message';
-                            statusMessage.style.fontSize = '0.9rem';
-                            statusMessage.style.fontWeight = '700';
-                            statusMessage.style.textAlign = 'center';
-                            statusMessage.style.marginTop = '1rem';
-                            statusMessage.style.display = 'none';
-                            form.insertBefore(statusMessage, form.querySelector('.btn-submit'));
-                        }
-
-                        form.addEventListener('submit', async (event) => {
-                            event.preventDefault();
-                            statusMessage.style.display = 'none';
-                            statusMessage.innerText = '';
-                            const submitBtn = form.querySelector('.btn-submit');
-                            const originalText = submitBtn ? submitBtn.innerText : 'Save Config';
-                            let otpContainer = form.querySelector('.otp-container');
-                            if (!otpContainer) {
-                                otpContainer = document.createElement('div');
-                                otpContainer.className = 'form-group otp-container';
-                                otpContainer.style.display = 'none';
-                                otpContainer.style.marginTop = '1rem';
-                                otpContainer.innerHTML = `
-                                <label class="form-label" style="color: var(--red-text); font-weight: bold;">Enter Verification OTP</label>
-                                <input type="text" inputmode="numeric" pattern="[0-9]*" name="otp" class="form-input otp-input" placeholder="000000" required>`;
-                                form.insertBefore(otpContainer, statusMessage);
-                            }
-                            const otpInput = otpContainer.querySelector('.otp-input');
-
-                            // PHASE 1: Send OTP request
-                            if (!isOtpSent) {
-                                if (submitBtn) {
-                                    submitBtn.innerText = 'Sending OTP...';
-                                    submitBtn.disabled = true;
-                                }
-
-                                try {
-                                    const otpResponse = await fetch('/api/config/otp');
-
-                                    if (otpResponse.status === 200 || otpResponse.ok) {
-                                        // Display inline success status instead of alert
-                                        statusMessage.style.color = '#2e7d32'; // Green text
-                                        statusMessage.innerText = 'OTP sent successfully to your registered mobile number.';
-                                        statusMessage.style.display = 'block';
-
-                                        otpContainer.style.display = 'flex';
-                                        otpInput.required = true;
-                                        otpInput.focus();
-
-                                        isOtpSent = true;
-                                        if (submitBtn) submitBtn.innerText = 'Verify & Save Config';
-                                    } else {
-                                        throw new Error(`Status code: ${otpResponse.status}`);
-                                    }
-                                } catch (error) {
-                                    console.error('OTP processing failure state:', error);
-                                    // Display inline error status instead of alert
-                                    statusMessage.style.color = 'var(--red-text)';
-                                    statusMessage.innerText = 'Could not deliver OTP security code. Please try again.';
-                                    statusMessage.style.display = 'block';
-
-                                    if (submitBtn) submitBtn.innerText = originalText;
-                                } finally {
-                                    if (submitBtn) submitBtn.disabled = false;
-                                }
-                                return;
-                            }
-
-                            // PHASE 2: Submit form variables with verified OTP
-                            if (submitBtn) {
-                                submitBtn.innerText = 'Verifying...';
-                                submitBtn.disabled = true;
-                            }
-
-                            try {
-                                const response = await fetch(form.action || window.location.href, {
-                                    method: 'POST',
-                                    body: new FormData(form)
-                                });
-
-                                if (response.ok) {
-                                    statusMessage.style.color = '#2e7d32'; // Green text
-                                    statusMessage.innerText = 'Configuration updated successfully!';
-                                    statusMessage.style.display = 'block';
-
-                                    otpContainer.style.display = 'none';
-                                    otpInput.required = false;
-                                    otpInput.value = '';
-                                    isOtpSent = false;
-                                    if (submitBtn) submitBtn.innerText = originalText;
-                                } else {
-                                    statusMessage.style.color = 'var(--red-text)';
-                                    statusMessage.innerText = 'Verification failed. Incorrect OTP or invalid parameters.';
-                                    statusMessage.style.display = 'block';
-                                }
-                            } catch (error) {
-                                console.error('Form processing error caught:', error);
-                                statusMessage.style.color = 'var(--red-text)';
-                                statusMessage.innerText = 'An execution error occurred while processing updates.';
+                            if (otpResponse.status === 200 || otpResponse.ok) {
+                                statusMessage.style.color = '#2e7d32';
+                                statusMessage.innerText = 'OTP sent successfully to your registered mobile number.';
                                 statusMessage.style.display = 'block';
-                            } finally {
-                                if (submitBtn) {
-                                    submitBtn.disabled = false;
-                                    if (!isOtpSent && submitBtn) submitBtn.innerText = originalText;
-                                }
+
+                                otpContainer.style.display = 'flex';
+                                otpInput.required = true;
+                                otpInput.focus();
+
+                                isOtpSent = true;
+                                if (submitBtn) submitBtn.innerText = 'Verify & Save Config';
+                            } else {
+                                throw new Error(`Status code: ${otpResponse.status}`);
                             }
+                        } catch (error) {
+                            console.error('OTP processing failure state:', error);
+                            statusMessage.style.color = 'var(--red-text)';
+                            statusMessage.innerText = 'Could not deliver OTP. Please try again.';
+                            statusMessage.style.display = 'block';
+
+                            if (submitBtn) submitBtn.innerText = originalText;
+                        } finally {
+                            if (submitBtn) submitBtn.disabled = false;
+                        }
+                        return;
+                    }
+
+                    if (submitBtn) {
+                        submitBtn.innerText = 'Verifying...';
+                        submitBtn.disabled = true;
+                    }
+
+                    try {
+                        const response = await fetch(form.action || window.location.href, {
+                            method: 'POST',
+                            body: new FormData(form)
                         });
-                    });
-                };
-                window.addEventListener('DOMContentLoaded', () => {
-                fetchLivePriceData();
-                setInterval(fetchLivePriceData, 1000);
 
-                loadExistingConfigurations();
-                initializeFormHandlers();
+                        if (response.ok) {
+                            statusMessage.style.color = '#2e7d32'; // Green text
+                            statusMessage.innerText = 'Charges updated successfully!';
+                            statusMessage.style.display = 'block';
+
+                            otpContainer.style.display = 'none';
+                            otpInput.required = false;
+                            otpInput.value = '';
+                            isOtpSent = false;
+                            if (submitBtn) submitBtn.innerText = originalText;
+                        } else {
+                            statusMessage.style.color = 'var(--red-text)';
+                            statusMessage.innerText = 'Verification failed. Incorrect OTP.';
+                            statusMessage.style.display = 'block';
+                        }
+                    } catch (error) {
+                        console.error('Form processing error caught:', error);
+                        statusMessage.style.color = 'var(--red-text)';
+                        statusMessage.innerText = 'An execution error occurred while processing updates.';
+                        statusMessage.style.display = 'block';
+                    } finally {
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            if (!isOtpSent && submitBtn) submitBtn.innerText = originalText;
+                        }
+                    }
+                });
             });
+        };
+        window.addEventListener('DOMContentLoaded', () => {
+        fetchLivePriceData();
+        setInterval(fetchLivePriceData, 1000);
+        loadExistingConfigurations();
+        initialize();
+    });
 
-        </script>
+</script>
 </body>
 </html>

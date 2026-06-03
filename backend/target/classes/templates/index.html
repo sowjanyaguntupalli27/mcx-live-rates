@@ -108,7 +108,7 @@
 
         .main-container {
             max-width: 1300px;
-            margin: 0 auto;
+            margin: 6rem auto;
             padding: 2rem;
             width: 100%;
         }
@@ -183,7 +183,7 @@
         .rates-table td {
             padding: 1.25rem 0;
             border-bottom: 1px solid var(--border-color);
-            font-size: 1.05rem;
+            font-size: 0.85rem;
         }
 
         .rates-table tr:last-child td {
@@ -196,6 +196,7 @@
 
         .col-purity {
             color: var(--text-light);
+            font-weight: 600;
         }
 
         .col-buy {
@@ -248,18 +249,28 @@
         const formatCurrency = (value) => {
             return new Intl.NumberFormat('en-IN').format(value);
         };
+        const purityKaratMap = {
+            'PURITY_999': '24k',
+            'PURITY_916': '22k',
+            'PURITY_875': '21k',
+            'PURITY_833': '20k',
+            'PURITY_750': '18k',
+            'PURITY_667': '16k',
+            'PURITY_583': '14k',
+            'PURITY_417': '10k'
+        };
 
         const transformPurityText = (item) => {
             if (!item.purity) return `Purity ${item.purityValue || ''}`;
-
-            let rawPurity = item.purity.replace('PURITY_', '');
-            let parts = rawPurity.split('_');
-            let purityDisplay = parts.map(p => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase()).join(' ');
-
-            if (item.purityValue) {
-                purityDisplay += ` (${item.purityValue})`;
+            let karatLabel = purityKaratMap[item.purity];
+            if (!karatLabel) {
+                let rawPurity = item.purity.replace('PURITY_', '');
+                karatLabel = parts.map(p => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase()).join(' ');
             }
-            return purityDisplay;
+            if (item.purityValue) {
+                return `${karatLabel} / ${item.purityValue}`;
+            }
+            return karatLabel;
         };
 
         const generateRowsHtml = (data) => {
@@ -292,7 +303,7 @@
                 <thead>
                     <tr>
                         <th>Purity Description</th>
-                        <th>Rate (Per Gram)</th>
+                        <th>Sell</th>
                     </tr>
                 </thead>
                 <tbody>
