@@ -21,12 +21,6 @@ public class LiveRateConfig {
     @Column(name = "SPREAD_CHARGES", nullable = false)
     private float spreadCharges;
 
-    @Column(name = "ASK", nullable = false)
-    private float ask;
-
-    @Column(name = "BUY", nullable = false)
-    private float buy;
-
     @Column(name = "SYMBOL", nullable = false)
     @Enumerated(EnumType.STRING)
     private Symbol symbol;

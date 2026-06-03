@@ -18,5 +18,4 @@ public class PurityRateDto {
         this.purityValue = purity.getValue();
         this.ratePerGram = ratePerGram;
     }
-
 }

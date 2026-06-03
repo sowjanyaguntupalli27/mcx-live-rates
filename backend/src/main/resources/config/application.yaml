@@ -22,6 +22,9 @@ com:
   vibullion:
     mcx-rates:
       url: https://starlineapi.in/getrates
+    sms:
+      url: http://localhost:8084/sms
+      appName: KUBERA
     build: @project.version@
 server:
   port: 8082

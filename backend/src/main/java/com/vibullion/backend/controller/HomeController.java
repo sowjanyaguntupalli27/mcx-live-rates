@@ -1,9 +1,11 @@
 package com.vibullion.backend.controller;
 
+import com.vibullion.backend.dto.ComparisonResponse;
 import com.vibullion.backend.dto.ConfigDto;
 import com.vibullion.backend.enums.Symbol;
 import com.vibullion.backend.service.McxRateConfigService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -106,4 +108,5 @@ public class HomeController {
         mv.addObject("version", this.buildVersion);
         return mv;
     }
+
 }

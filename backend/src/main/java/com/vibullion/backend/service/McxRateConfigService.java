@@ -73,12 +73,19 @@ public class McxRateConfigService {
         return separateResultList;
     }
 
-    public double getSpreadChargesFromDatabase() {
-        return liveRateConfigRepository.findAll().stream()
-                .findFirst()
+    public double getGoldSpreadCharges() {
+        return liveRateConfigRepository.findBySymbol(Symbol.GOLD)
                 .map(LiveRateConfig::getSpreadCharges)
-                .orElse(4800.0F);
-    }   public List<PurityRateDto> calculatePurityGramRates(McxRatesDto rateDto, double spreadCharges) {
+                .orElse(0.0F);
+    }
+
+    public double getSilverSpreadCharges() {
+        return liveRateConfigRepository.findBySymbol(Symbol.SILVER)
+                .map(LiveRateConfig::getSpreadCharges)
+                .orElse(0.0F);
+    }
+
+    public List<PurityRateDto> calculatePurityGramRates(McxRatesDto rateDto, double spreadCharges) {
         List<PurityRateDto> calculationResults = new ArrayList<>();
 
         if (rateDto == null) {
@@ -115,11 +122,10 @@ public class McxRateConfigService {
         if (config.isPresent()) {
             return ConfigDto.builder()
                     .spreadCharges(config.get().getSpreadCharges())
-                    .ask(config.get().getAsk())
                     .symbol(symbol)
                     .otp(0).build();
         }
-        return ConfigDto.builder().ask(0).otp(0).build();
+        return ConfigDto.builder().otp(0).build();
     }
 
     public void setConfig(ConfigDto configDto, Symbol symbol) {
@@ -133,13 +139,11 @@ public class McxRateConfigService {
         }
         var config = this.liveRateConfigRepository.findBySymbol(symbol);
         if (config.isPresent()) {
-            config.get().setAsk(configDto.getAsk());
             config.get().setSpreadCharges(Math.abs(configDto.getSpreadCharges()));
             this.liveRateConfigRepository.save(config.get());
         } else {
             var newConfig = LiveRateConfig.builder().symbol(symbol)
-                    .spreadCharges(Math.abs(configDto.getSpreadCharges()))
-                    .ask(configDto.getAsk()).build();
+                    .spreadCharges(Math.abs(configDto.getSpreadCharges())).build();
             this.liveRateConfigRepository.save(newConfig);
         }
         user.setOtp(null);
@@ -181,7 +185,6 @@ public class McxRateConfigService {
     }
     private LiveRateConfig covertToLiveRateConfig(ConfigDto configDto) {
         return LiveRateConfig.builder()
-                .ask(configDto.getAsk())
                 .spreadCharges(configDto.getSpreadCharges())
                 .symbol(configDto.getSymbol())
                 .build();

@@ -3,21 +3,24 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <style>
         :root {
             --bg-body: #f1f6f2;
             --text-dark: #0f241d;
             --text-light: #576d62;
-            --gold-primary: #8a6c22;
+            --gold-primary: #cda250;
+            --gold-bright: #dfb76c;  /* Updated to Match Image */
             --gold-light: #f5eedc;
             --green-dark: #0f3022;
             --green-card: #f8faf9;
             --white: #ffffff;
             --border-color: #e2e8e4;
             --red-text: #c0392b;
-            --green-text: #8a6c22;
+            --green-text: #cda250;
         }
 
         * {
@@ -27,7 +30,7 @@
         }
 
         body {
-            font-family: 'Manrope', sans-serif;
+            font-family: 'Lato', sans-serif;
             background-color: var(--bg-body);
             color: var(--text-dark);
             min-height: 100vh;
@@ -35,218 +38,88 @@
             flex-direction: column;
         }
 
-        /* Typography */
+
         h1, h2, h3, h4, h5, .serif {
-            font-family: 'EB Garamond', serif;
+            font-family: 'Lato', serif;
         }
 
-        /* Navbar */
+        .metal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            letter-spacing: 0.5px;
+        }
+
+        /* --- Navbar Styles --- */
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 3rem;
-            background-color: transparent;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding: 0 3rem;
+            background-color: #303e49;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            height: 100px;
         }
 
         .navbar-brand {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--green-dark);
+            display: flex;
+            align-items: center;
             text-decoration: none;
+            height: 100%;
+        }
+
+        .navbar-logo {
+            height: 140px;
+            width: auto;
+            display: block;
+            object-fit: contain;
+            margin-top: -5px;
         }
 
         .navbar-nav {
             display: flex;
             gap: 2.5rem;
             align-items: center;
+            height: 40%;
         }
 
         .nav-link {
             text-decoration: none;
-            color: var(--text-light);
+            color: var(--gold-primary);
             font-weight: 500;
-            font-size: 0.95rem;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            height: 100%;
             position: relative;
-            padding-bottom: 0.25rem;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--gold-bright);
         }
 
         .nav-link.active {
-            color: var(--text-dark);
+            color: var(--gold-bright);
         }
 
         .nav-link.active::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: 0; /* Snaps perfectly onto the navbar bottom border line */
             left: 0;
             width: 100%;
-            height: 2px;
-            background-color: var(--text-dark);
+            height: 2px; /* Slightly thicker premium weight line */
+            background-color: var(--gold-bright);
         }
 
-        .navbar-actions {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
 
-        .icon-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: var(--text-dark);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .btn-primary {
-            background-color: var(--gold-primary);
-            color: var(--white);
-            border: none;
-            padding: 0.75rem 1.5rem;
-            font-family: 'Manrope', sans-serif;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: background-color 0.2s;
-        }
-
-        .btn-primary:hover {
-            background-color: #72591a;
-        }
-
-        /* Main Container */
+        /* --- Content Container --- */
         .container {
             max-width: 1300px;
             margin: 0 auto;
             padding: 2rem;
             width: 100%;
-        }
-
-        /* Top Section */
-        .hero-section {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .hero-card {
-            background: var(--white);
-            border-radius: 8px;
-            padding: 3rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-card.dark {
-            background: linear-gradient(145deg, #0f3022 0%, #0a2016 100%);
-            color: var(--white);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .hero-card.dark::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px),
-                              linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            opacity: 0.3;
-            pointer-events: none;
-        }
-
-        .market-overview-label {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--gold-primary);
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-        }
-
-        .hero-title {
-            font-size: 3.5rem;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            color: var(--text-dark);
-        }
-
-        .hero-desc {
-            color: var(--text-light);
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 2rem;
-            max-width: 80%;
-        }
-
-        .hero-badges {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .badge {
-            background-color: #eef5ef;
-            color: var(--text-dark);
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .badge.silver {
-            background-color: #f1f4f3;
-        }
-
-        .hero-dark-title {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-dark-desc {
-            color: #a3b8af;
-            font-size: 1rem;
-            margin-bottom: 2rem;
-            position: relative;
-            z-index: 1;
-            line-height: 1.5;
-        }
-
-        .btn-outline-gold {
-            background: transparent;
-            border: 1px solid rgba(245, 238, 220, 0.3);
-            color: var(--gold-light);
-            padding: 0.75rem 1.5rem;
-            font-family: 'Manrope', sans-serif;
-            font-weight: 500;
-            font-size: 0.9rem;
-            cursor: pointer;
-            border-radius: 4px;
-            display: inline-block;
-            width: fit-content;
-            transition: all 0.2s;
-            position: relative;
-            z-index: 1;
-        }
-
-        .btn-outline-gold:hover {
-            border-color: var(--gold-light);
-            background: rgba(245, 238, 220, 0.1);
         }
 
         /* Rates Section */
@@ -285,7 +158,7 @@
             color: var(--gold-primary);
             font-size: 1.8rem;
         }
-        
+
         .silver-card .rates-title .material-symbols-outlined {
             color: #7b8e85;
         }
@@ -335,28 +208,9 @@
             color: var(--text-light);
         }
 
-        .col-buy, .col-sell {
+        .col-buy {
             font-weight: 600;
             color: var(--text-dark);
-        }
-
-        .col-change {
-            font-weight: 700;
-        }
-
-        .text-positive {
-            color: var(--gold-primary);
-        }
-
-        .text-negative {
-            color: var(--red-text);
-        }
-
-        .note {
-            font-size: 0.85rem;
-            color: var(--text-light);
-            font-style: italic;
-            margin-top: 1rem;
         }
 
         .loading {
@@ -370,280 +224,186 @@
             align-items: center;
         }
 
-        /* Bottom Section */
-        .features-section {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-        }
-
-        .feature-card {
-            background: var(--white);
-            border-radius: 8px;
-            padding: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(0,0,0,0.05);
-        }
-
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .icon-calc { background: #fdf5e2; color: var(--gold-primary); }
-        .icon-hist { background: var(--green-dark); color: var(--white); }
-        .icon-supp { background: var(--green-dark); color: var(--white); }
-        .icon-loc { background: #eef2f0; color: var(--text-dark); }
-
-        .feature-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .feature-title {
-            font-size: 1rem;
-            color: var(--text-dark);
-            margin-bottom: 0.15rem;
-            font-weight: 600;
-        }
-
-        .feature-desc {
-            font-size: 0.85rem;
-            color: var(--text-light);
-        }
-
         @media (max-width: 1024px) {
-            .hero-section {
-                grid-template-columns: 1fr;
-            }
             .rates-section {
                 grid-template-columns: 1fr;
-            }
-            .features-section {
-                grid-template-columns: repeat(2, 1fr);
             }
         }
 
         @media (max-width: 768px) {
-            .features-section {
-                grid-template-columns: 1fr;
+            .navbar {
+                padding: 0.5rem 1.5rem;
             }
             .navbar-nav {
-                display: none;
+                display: none; /* Can be handled via a mobile layout script toggle if desired */
             }
         }
     </style>
     <title>Viindhya Bullion - Live Rates</title>
 </head>
 <body>
-    <nav class="navbar">
-        <a href="#" class="navbar-brand serif">Viindhya Bullion</a>
-        <div class="navbar-nav">
-            <a href="#" class="nav-link active">Live Rates</a>
-            <a href="#" class="nav-link">Market Trends</a>
-            <a href="#" class="nav-link">Gold Calculator</a>
-            <a href="#" class="nav-link">About Us</a>
-        </div>
-        <div class="navbar-actions">
-            <button class="icon-btn">
-                <span class="material-symbols-outlined">notifications</span>
-            </button>
-            <button class="icon-btn">
-                <span class="material-symbols-outlined">account_circle</span>
-            </button>
-            <button class="btn-primary">Trade Now</button>
-        </div>
-    </nav>
+<nav class="navbar">
+    <a href="/" class="navbar-brand">
+        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/43dadeeb770ebd8e68499bd816c80e8bbfcff1aa?placeholderIfAbsent=true" alt="Viindhya Bullion Logo" class="navbar-logo">
+    </a>
+    <div class="navbar-nav">
+        <a href="/" class="nav-link active">Live Rates</a>
+        <a href="/about-us" class="nav-link">About Us</a>
+        <a href="/privacy" class="nav-link">Privacy Policy</a>
+    </div>
+    <div class="navbar-actions">
+        <!-- Space allocated for buttons or layout symmetry -->
+    </div>
+</nav>
 
-    <div class="container">
-        <!-- Hero Section -->
-        <div class="hero-section">
-            <div class="hero-card">
-                <div class="market-overview-label">MARKET OVERVIEW</div>
-                <h1 class="hero-title serif">Bullion Market Stability Remains Strong</h1>
-                <p class="hero-desc">Gold futures maintain a steady trajectory as global economic indicators suggest continued trust in precious metals. Monitor real-time shifts below.</p>
-                <div class="hero-badges">
-                    <div class="badge">
-                        <span class="material-symbols-outlined" style="color: #8a6c22; font-size: 1.1rem;">trending_up</span>
-                        GOLD +0.24%
-                    </div>
-                    <div class="badge silver">
-                        <span class="material-symbols-outlined" style="color: #576d62; font-size: 1.1rem;">trending_down</span>
-                        SILVER -0.12%
-                    </div>
-                </div>
-            </div>
-            <div class="hero-card dark">
-                <h2 class="hero-dark-title serif">Premium Account</h2>
-                <p class="hero-dark-desc">Unlock 0.1% lower spreads on bulk silver trading today.</p>
-                <button class="btn-outline-gold">Upgrade Now</button>
-            </div>
-        </div>
-
-        <!-- Rates Section -->
-        <div class="rates-section" id="rates-container">
-            <div class="loading">
-                <span class="material-symbols-outlined" style="font-size: 2rem; animation: spin 2s linear infinite;">sync</span>
-                <p style="margin-top: 1rem;">Fetching live rates...</p>
-                <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
-            </div>
+<div class="container">
+    <!-- Rates Section -->
+    <div class="rates-section" id="rates-container">
+        <div class="loading">
+            <span class="material-symbols-outlined" style="font-size: 2rem; animation: spin 2s linear infinite;">sync</span>
+            <p style="margin-top: 1rem;">Fetching live rates...</p>
+            <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
         </div>
     </div>
+</div>
 
-    <script>
-        // Formatter for Currency
-        const formatCurrency = (value) => {
-            return new Intl.NumberFormat('en-IN').format(value);
-        };
+<script>
 
-        const createGoldTable = (data) => {
-            const rows = data.map(item => {
-                const buy = item.ratePerGram || 0;
-                // Since the original API doesn't seem to provide sell/change, we simulate it here just for visual completeness to match design.
-                const sell = buy - (buy * 0.01);
-                const change = Math.floor(Math.random() * 200) - 100;
-                const changeClass = change >= 0 ? 'text-positive' : 'text-negative';
-                const changeSign = change > 0 ? '+' : '';
-                
-                let rawPurity = item.purity ? item.purity.replace('PURITY_', '') : '';
-                let parts = rawPurity.split('_');
-                let purityDisplay = parts.map(p => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase()).join(' ');
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('en-IN').format(value);
+    };
 
-                if (item.purityValue) {
-                    purityDisplay += ` (${item.purityValue})`;
-                }
+    const transformPurityText = (item) => {
+        if (!item.purity) return `Purity ${item.purityValue || ''}`;
 
-                return `
-                    <tr>
-                        <td class="col-purity">${purityDisplay}</td>
-                        <td class="col-buy">${formatCurrency(buy)}</td>
-                        <td class="col-sell">${formatCurrency(sell)}</td>
-                        <td class="col-change ${changeClass}">${changeSign}${change}</td>
-                    </tr>
-                `;
-            }).join('');
+        let rawPurity = item.purity.replace('PURITY_', '');
+        let parts = rawPurity.split('_');
+        let purityDisplay = parts.map(p => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase()).join(' ');
 
+        if (item.purityValue) {
+            purityDisplay += ` (${item.purityValue})`;
+        }
+        return purityDisplay;
+    };
+
+    const generateRowsHtml = (data) => {
+        if (!Array.isArray(data)) return '';
+        return data.map(item => {
+            const buy = item.ratePerGram || 0;
+            const purityLabel = transformPurityText(item);
             return `
-                <div class="rates-card">
-                    <div class="rates-header">
-                        <h3 class="rates-title serif">
-                            <span class="material-symbols-outlined">stars</span>
-                            Gold Rates
-                        </h3>
-                        <div class="live-updates">LIVE UPDATES</div>
-                    </div>
-                    <table class="rates-table">
-                        <thead>
-                            <tr>
-                                <th>PURITY</th>
-                                <th>BUY (₹)</th>
-                                <th>SELL (₹)</th>
-                                <th>CHANGE</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${rows}
-                        </tbody>
-                    </table>
+            <tr>
+                <td class="col-purity">${purityLabel}</td>
+                <td class="col-buy">₹${formatCurrency(buy)}</td>
+            </tr>
+        `;
+        }).join('');
+    };
+
+
+    const createGoldTable = (data, timeString) => {
+        if (!data || data.length === 0) return '';
+        return `
+        <div class="rates-card gold-card">
+            <div class="rates-header">
+                <div class="rates-title">
+                    <span class="material-symbols-outlined">monetization_on</span>
+                    <h2 class="metal-title">Gold Live Rate</h2>
                 </div>
-            `;
-        };
-
-        const createSilverTable = (data) => {
-            const rows = data.map(item => {
-                const buy = item.ratePerGram || 0;
-                const change = Math.floor(Math.random() * 200) - 100;
-                let trendIcon = '<span class="material-symbols-outlined">trending_flat</span>';
-                let trendClass = 'style="color: #a3b8af;"';
-                
-                if (change > 0) {
-                    trendIcon = '<span class="material-symbols-outlined">trending_up</span>';
-                    trendClass = 'class="col-change text-positive"';
-                } else if (change < 0) {
-                    trendIcon = '<span class="material-symbols-outlined">trending_down</span>';
-                    trendClass = 'class="col-change text-negative"';
-                }
-
-                let rawPurity = item.purity ? item.purity.replace('PURITY_', '') : '';
-                let parts = rawPurity.split('_');
-                let purityDisplay = parts.map(p => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase()).join(' ');
-
-                if (item.purityValue) {
-                    purityDisplay += ` (${item.purityValue})`;
-                }
-
-                return `
+                <div class="live-updates">Live ${timeString}</div>
+            </div>
+            <table class="rates-table">
+                <thead>
                     <tr>
-                        <td class="col-purity">${purityDisplay}</td>
-                        <td class="col-buy">${formatCurrency(buy)}</td>
-                        <td ${trendClass}>${trendIcon}</td>
+                        <th>Purity Description</th>
+                        <th>Rate (Per Gram)</th>
                     </tr>
-                `;
-            }).join('');
+                </thead>
+                <tbody>
+                    ${generateRowsHtml(data)}
+                </tbody>
+            </table>
+        </div>
+    `;
+    };
 
-            return `
-                <div class="rates-card silver-card">
-                    <div class="rates-header">
-                        <h3 class="rates-title serif">
-                            <span class="material-symbols-outlined">account_balance</span>
-                            Silver Rates
-                        </h3>
-                        <div class="live-updates">LIVE UPDATES</div>
-                    </div>
-                    <table class="rates-table">
-                        <thead>
-                            <tr>
-                                <th>PURITY</th>
-                                <th>BUY (₹)</th>
-                                <th>TREND</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${rows}
-                        </tbody>
-                    </table>
+
+    const createSilverTable = (data, timeString) => {
+        if (!data || data.length === 0) return '';
+        return `
+        <div class="rates-card silver-card">
+            <div class="rates-header">
+                <div class="rates-title">
+                    <span class="material-symbols-outlined">layers</span>
+                    <h2 class="metal-title">Silver Live Rate</h2>
                 </div>
-            `;
-        };
+                <div class="live-updates">Live ${timeString}</div>
+            </div>
+            <table class="rates-table">
+                <thead>
+                    <tr>
+                        <th>Purity Description</th>
+                        <th>Rate (Per Gram)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${generateRowsHtml(data)}
+                </tbody>
+            </table>
+        </div>
+    `;
+    };
 
-        // Logic to fetch rates and update DOM
-        const fetchRates = async () => {
-            try {
-                const response = await fetch('/mcxRates/purities');
-                if (!response.ok) throw new Error('Network response was not ok');
-                const data = await response.json();
-                
-                const container = document.getElementById('rates-container');
+
+    const fetchRates = async () => {
+        try {
+            const response = await fetch('/mcxRates/purities');
+            if (!response.ok) throw new Error('Data endpoint unreachable');
+            const data = await response.json();
+
+            const container = document.getElementById('rates-container');
+            if (!container) return;
+
+            const hasGold = data && data.gold && Array.isArray(data.gold) && data.gold.length > 0;
+            const hasSilver = data && data.silver && Array.isArray(data.silver) && data.silver.length > 0;
+
+            if (!hasGold && !hasSilver) {
                 container.innerHTML = `
-                    ${data.gold ? createGoldTable(data.gold) : ''}
-                    ${data.silver ? createSilverTable(data.silver) : ''}
-                `;
-            } catch (error) {
-                console.error('Error fetching live rates:', error);
-                document.getElementById('rates-container').innerHTML = `
-                    <div class="loading" style="color: #c0392b; grid-column: 1 / -1;">
-                        <span class="material-symbols-outlined" style="font-size: 2rem;">error</span>
-                        <p style="margin-top: 1rem;">Unable to load live rates at the moment.</p>
-                    </div>
-                `;
+                <div class="loading" style="color: var(--text-light); grid-column: 1 / -1;">
+                    <span class="material-symbols-outlined" style="font-size: 2.5rem; color: var(--gold-primary);">trending_flat</span>
+                    <p style="margin-top: 1.25rem;">No active market trades posted for this session.</p>
+                </div>
+            `;
+                return;
             }
-        };
 
-        document.addEventListener('DOMContentLoaded', fetchRates);
-        setInterval(fetchRates, 60000);
-    </script>
+            const now = new Date();
+            const timestamp = `@ ${now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'})}`;
+
+            container.innerHTML = `
+            ${hasGold ? createGoldTable(data.gold, timestamp) : ''}
+            ${hasSilver ? createSilverTable(data.silver, timestamp) : ''}
+        `;
+        } catch (error) {
+            console.error('System Exception Caught on Render:', error);
+            const container = document.getElementById('rates-container');
+            if (container) {
+                container.innerHTML = `
+                <div class="loading" style="color: var(--red-text); grid-column: 1 / -1;">
+                    <span class="material-symbols-outlined" style="font-size: 2.5rem;">error</span>
+                    <p style="margin-top: 1.25rem; font-weight: 700;">Unable to connect to dynamic rate services.</p>
+                    <p style="font-size: 0.9rem; margin-top: 0.25rem; color: var(--text-light)">Retrying automatically in the background...</p>
+                </div>
+            `;
+            }
+        }
+    };
+
+    window.addEventListener('DOMContentLoaded', () => {
+        fetchRates();
+        setInterval(fetchRates, 1000);
+    });
+
+</script>
 </body>
 </html>

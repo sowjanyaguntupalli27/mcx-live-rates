@@ -8,6 +8,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface LiveRateConfigRepository extends JpaRepository<LiveRateConfig, UUID> {
-
-    public Optional<LiveRateConfig> findBySymbol(Symbol symbol);
+   public Optional<LiveRateConfig> findBySymbol(Symbol symbol);
 }

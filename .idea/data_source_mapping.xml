@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourcePerFileMappings">
-    <file url="file://$PROJECT_DIR$/backend/src/main/resources/db/DDL/V0__DDL_init.sql" value="d95803df-4173-4f87-aad7-5a6f6cbecb12" />
-    <file url="file://$PROJECT_DIR$/backend/src/main/resources/db/DML/V0__DML_init_data.sql" value="d95803df-4173-4f87-aad7-5a6f6cbecb12" />
+    <file url="file://$PROJECT_DIR$/backend/src/main/resources/db/DML/V0__DML_init_data.sql" value="639e616a-03dd-444e-b478-d905ed61df28" />
   </component>
 </project>

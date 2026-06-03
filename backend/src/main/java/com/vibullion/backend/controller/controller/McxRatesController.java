@@ -26,7 +26,8 @@ public class McxRatesController {
     @GetMapping(value = "/mcxRates/purities")
     public Map<String, List<PurityRateDto>> getBothPurityRates() {
         List<McxRatesDto> liveRates = mcxRateConfigService.fetchLiveRates();
-        double charges = mcxRateConfigService.getSpreadChargesFromDatabase();
+        double goldCharges = mcxRateConfigService.getGoldSpreadCharges();
+        double silverCharges = mcxRateConfigService.getSilverSpreadCharges();
 
         Map<String, List<PurityRateDto>> completeResponse = new HashMap<>();
 
@@ -34,13 +35,13 @@ public class McxRatesController {
                 .filter(rate -> "GOLD".equalsIgnoreCase(rate.getSymbol()))
                 .findFirst()
                 .ifPresent(gold -> completeResponse.put("gold",
-                        mcxRateConfigService.calculatePurityGramRates(gold, charges)));
+                        mcxRateConfigService.calculatePurityGramRates(gold, goldCharges)));
 
         liveRates.stream()
                 .filter(rate -> "SILVER".equalsIgnoreCase(rate.getSymbol()))
                 .findFirst()
                 .ifPresent(silver -> completeResponse.put("silver",
-                        mcxRateConfigService.calculatePurityGramRates(silver, charges)));
+                        mcxRateConfigService.calculatePurityGramRates(silver, silverCharges)));
 
         return completeResponse;
     }
