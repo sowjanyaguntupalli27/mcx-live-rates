@@ -1,370 +1,453 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    <style>
-        :root {
-            --bg-body: #f1f6f2;
-            --text-dark: #0f241d;
-            --text-light: #576d62;
-            --gold-primary: #cda250;
-            --gold-bright: #dfb76c;  /* Updated to Match Image */
-            --gold-light: #f5eedc;
-            --green-dark: #303e49;
-            --green-card: #f8faf9;
-            --white: #ffffff;
-            --border-color: #e2e8e4;
-            --red-text: #c0392b;
-            --green-text: #cda250;
-        }
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <title>About Us - Viindhya Bullion</title>
+   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+   <style>
+      :root {
+         --primary: #305776;
+         --primary-dark: #1e3a50;
+         --primary-light: #3d6b90;
+         --gold: #d3a724;
+         --gold-bright: #fbc523;
+         --gold-pale: rgba(211, 167, 36, 0.1);
+         --hero-left: #161f27;
+         --hero-mid: #184166;
+         --bg: #eaeef1;
+         --white: #ffffff;
+         --text: #333333;
+         --text-sub: #5a6a7a;
+         --text-muted: #8a9aaa;
+         --border: rgba(48, 87, 118, 0.14);
+         --border-gold: rgba(211, 167, 36, 0.22);
+         --shadow: 0 8px 32px rgba(22, 31, 39, 0.12);
+         --shadow-hover: 0 16px 48px rgba(22, 31, 39, 0.18);
+         --radius: 20px;
+         --transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      
+      body {
+         background-color: var(--bg);
+         color: var(--text);
+      }
+      
+      @keyframes blink {
+         0% { opacity: 1; }
+         50% { opacity: 0.7; }
+         100% { opacity: 1; }
+      }
+      .blink-text {
+         animation: blink 1.5s linear infinite;
+      }
+      .nav-link {
+         position: relative;
+         padding-bottom: 5px;
+      }
+      .nav-link::after {
+         content: '';
+         position: absolute;
+         width: 0;
+         height: 2px;
+         bottom: 0;
+         left: 0;
+         background-color: #CA8A04;
+         transition: width 0.3s ease;
+      }
+      .nav-link:hover::after {
+         width: 100%;
+      }
+      .gold-gradient {
+         background: linear-gradient(to right, #303e49 0%, #303e49 25%, #3f5060 50%, #303e49 75%, #303e49 100%);
+      }
+      .footer-link {
+         position: relative;
+      }
+      .footer-link:after {
+         content: '';
+         position: absolute;
+         width: 0;
+         height: 1px;
+         bottom: 0;
+         left: 0;
+         background-color: #CA8A04;
+         transition: width 0.3s ease;
+      }
+      .footer-link:hover:after {
+         width: 100%;
+      }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Lato', sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-dark);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        h1, h2, h3, h4, h5, .serif {
-            font-family: 'Lato', sans-serif;
-        }
-
-        /* --- Navbar Styles --- */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 3rem;
-            background-color: #303e49;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            height: 100px;
-        }
-
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            height: 100%;
-        }
-
-        .navbar-logo {
-            height: 140px;
-            width: auto;
-            display: block;
-            object-fit: contain;
-            margin-top: -5px;
-        }
-
-        .navbar-nav {
-            display: flex;
-            gap: 2.5rem;
-            align-items: center;
-            height: 40%;
-        }
-
-        .nav-link {
-            text-decoration: none;
-            color: var(--gold-primary);
-            font-weight: 500;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            height: 100%;
-            position: relative;
-            transition: color 0.2s ease;
-        }
-
-        .nav-link:hover {
-            color: var(--gold-bright);
-        }
-
-        .nav-link.active {
-            color: var(--gold-bright);
-        }
-
-        .nav-link.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: var(--gold-bright);
-        }
-
-
-        .space-y-6 > * + * {
-            margin-top: 1.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .navbar {
-                padding: 0.5rem 1.5rem;
-            }
-            .navbar-nav {
-                display: none;
-            }
-        }
-        /* --- Global Container Styling Shift --- */
-        .container {
-            max-width: 1200px;
-            padding: 4rem 2rem;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        /* --- Replicated Section Cards --- */
-        .content-card {
-            background-color: var(--white);
-            border-radius: 8px;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-        }
-
-        /* --- Paragraph Styles --- */
-        .intro-text {
-            color: var(--text-light);
-            font-size: 1.05rem;
-            line-height: 1.7;
-        }
-
-        .intro-text p + p {
-            margin-top: 1.5rem;
-        }
-
-        /* --- Section Headings --- */
-        .section-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-        }
-
-        .section-title .icon {
-            font-size: 1.6rem;
-            color: var(--text-dark);
-        }
-
-        /* --- Timeline Layout (Our Story) --- */
-        .timeline-intro {
-            color: var(--text-light);
-            line-height: 1.6;
-            margin-bottom: 2rem;
-            font-size: 1rem;
-        }
-
-        .timeline-item {
-            margin-bottom: 1.5rem;
-        }
-
-        .timeline-date {
-            font-weight: 700;
-            color: var(--text-dark);
-            font-size: 1.05rem;
-            margin-bottom: 0.4rem;
-        }
-
-        .timeline-desc {
-            color: var(--text-light);
-            line-height: 1.6;
-            white-space: pre-line; /* Preserves line breaks cleanly */
-        }
-
-        /* --- Services Block (Columns) --- */
-        .services-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            margin-top: 1rem;
-        }
-
-        .service-column-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .service-column-title .icon {
-            color: #2e5b82; /* Custom subtle blue/slate tone for icons */
-            font-size: 1.4rem;
-        }
-
-        .service-desc {
-            color: var(--text-light);
-            line-height: 1.6;
-            font-size: 0.98rem;
-        }
-
-        /* --- Gold Rates Section (Bottom Container) --- */
-        .rates-info-card {
-            background-color: #f4f8fb; /* Light grayish-blue banner fill */
-            border-radius: 8px;
-            padding: 2.5rem;
-            margin-top: 2rem;
-        }
-
-        .rates-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #1e3a56;
-            margin-bottom: 1.5rem;
-        }
-
-        .rates-list {
-            list-style: none;
-        }
-
-        .rates-list li {
-            color: #3a5266;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-            font-size: 0.98rem;
-        }
-
-        .rates-list li:last-child {
-            margin-bottom: 0;
-        }
-
-        /* --- Responsive Adaptations --- */
-        @media (max-width: 768px) {
-            .services-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .content-card,
-            .rates-info-card {
-                padding: 1.75rem;
-            }
-        }
-
-
-    </style>
-    <title>Viindhya Bullion - Live Rates</title>
+      /* Angular Design Styles */
+      .band {
+        width: 100%;
+        position: relative;
+      }
+      .app-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 48px;
+      }
+      .section-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 10px;
+      }
+      .section-label::before {
+        content: '';
+        width: 28px;
+        height: 1.5px;
+        background: linear-gradient(90deg, var(--gold-bright), var(--gold));
+        border-radius: 2px;
+        display: block;
+      }
+      .divider-gem {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        margin: 18px 0 24px;
+      }
+      .divider-gem .dline {
+        flex: 1;
+        height: 1px;
+        max-width: 80px;
+        background: linear-gradient(90deg, transparent, var(--gold));
+      }
+      .divider-gem .dline.right {
+        background: linear-gradient(90deg, var(--gold), transparent);
+      }
+      .divider-gem .ddiamond {
+        width: 9px;
+        height: 9px;
+        background: var(--gold-bright);
+        transform: rotate(45deg);
+        margin: 0 12px;
+        box-shadow: 0 0 12px rgba(251, 197, 35, 0.4);
+      }
+      .reveal, .reveal-l, .reveal-r {
+        opacity: 0; 
+      }
+      .animate__animated {
+        opacity: 1 !important;
+      }
+      #hero-band {
+        background: linear-gradient(105deg, var(--hero-left) 0%, var(--hero-left) 20%, var(--hero-mid) 50%, var(--hero-left) 80%, var(--hero-left) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        padding: 80px 24px;
+      }
+      #hero-band::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 20% 60%, rgba(48, 87, 118, 0.35) 0%, transparent 55%), radial-gradient(circle at 80% 40%, rgba(24, 65, 102, 0.4) 0%, transparent 55%);
+        pointer-events: none;
+      }
+      #hero-band::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(-45deg, transparent, transparent 60px, rgba(211, 167, 36, 0.025) 60px, rgba(211, 167, 36, 0.025) 61px);
+        pointer-events: none;
+      }
+      .hero-inner { position: relative; z-index: 2; max-width: 680px; }
+      .hero-inner h1 {
+        font-size: clamp(28px, 7vw, 40px);
+        font-weight: 600;
+        line-height: 1.1;
+        color: #fff;
+        margin-bottom: 16px;
+      }
+      .hero-inner h1 span { color: var(--gold-bright); font-style: normal; }
+      .hero-sub {
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.65);
+        line-height: 1.75;
+        font-weight: 300;
+        margin-top: 8px;
+      }
+      #cards-band { background: var(--bg); padding: 0; position: relative; z-index: 3; margin-top: -1px; }
+      .cards-lift {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+        padding: 0 48px;
+        transform: translateY(-35px);
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .qcard {
+        background: var(--white);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        padding: 36px 28px;
+        box-shadow: var(--shadow);
+        text-align: center;
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+      }
+      .qcard::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--primary-light), var(--gold));
+      }
+      .qcard:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); border-color: rgba(48, 87, 118, 0.28); }
+      .qcard-icon {
+        width: 60px; height: 60px; border-radius: 18px; margin: 0 auto 20px;
+        background: linear-gradient(135deg, rgba(48, 87, 118, 0.08), rgba(48, 87, 118, 0.15));
+        border: 1.5px solid rgba(48, 87, 118, 0.18);
+        display: flex; align-items: center; justify-content: center;
+        transition: var(--transition); font-size: 28px;
+      }
+      .qcard:hover .qcard-icon { background: var(--primary); transform: scale(1.08) rotate(6deg); border-color: transparent; }
+      .qcard h3 { font-size: 22px; font-weight: 600; color: var(--primary); margin-bottom: 10px; }
+      .qcard p { font-size: 14px; color: var(--text-sub); line-height: 1.65; font-weight: 300; margin-bottom: 20px; text-align: left; }
+      #content-band { background: var(--bg); padding: 20px 0 30px; }
+      .content-section-wrap { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: stretch; }
+      @media (min-width: 900px) { .content-section-wrap { grid-template-columns: 1fr 1fr; } }
+      .text-card {
+        background: var(--white); border-radius: var(--radius); border: 1px solid var(--border);
+        box-shadow: var(--shadow); padding: 48px 44px;
+      }
+      .text-card-header { margin-bottom: 30px; }
+      .text-card-header h2 { font-size: 32px; font-weight: 600; color: var(--primary); line-height: 1.2; margin-top: 5px; }
+      .gold-bar {
+        width: 48px; height: 3px; border-radius: 3px;
+        background: linear-gradient(90deg, var(--gold-bright), var(--gold)); margin: 12px 0 0;
+      }
+      .content-blocks { display: flex; flex-direction: column; gap: 28px; }
+      .text-block .text-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+      .text-block .text-header h3 { font-size: 22px; font-weight: 600; color: var(--primary); margin: 0; }
+      .text-block p { font-size: 15px; color: var(--text-sub); line-height: 1.7; font-weight: 300; margin: 0 0 10px 0; }
+      
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--gold);
+        color: #1a1008;
+        border-radius: 50px;
+        padding: 12px 28px;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        transition: var(--transition);
+        text-transform: uppercase;
+        cursor: pointer;
+        border: none;
+        box-shadow: 0 4px 15px rgba(211, 167, 36, 0.3);
+      }
+      .cta-btn:hover {
+        background: var(--gold-bright);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(211, 167, 36, 0.4);
+      }
+      
+      @media (max-width: 768px) {
+        .app-container { padding: 0 24px; }
+        .cards-lift { padding: 0 24px; }
+        .text-card { padding: 32px 24px; }
+        .text-card-header h2 { font-size: 24px; }
+      }
+   </style>
+   <script src="https://cdn.tailwindcss.com"></script>
+   <script>
+      tailwind.config = {
+         theme: {
+            extend: {
+               colors: {
+                  yellow: { 50: "#FFFBEB", 600: "#CA8A04" },
+                  stone: { 50: "#FAFAF9" },
+                  slate: { 900: "#0F172A" },
+                  zinc: { 300: "#D4D4D8" },
+               },
+               fontFamily: {
+                  sans: ["DM Sans", "sans-serif"],
+                  serif: ["Playfair Display", "serif"],
+               },
+            },
+         },
+      };
+   </script>
 </head>
-<body>
-<nav class="navbar">
-    <a href="/" class="navbar-brand">
-        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/43dadeeb770ebd8e68499bd816c80e8bbfcff1aa?placeholderIfAbsent=true" alt="Viindhya Bullion Logo" class="navbar-logo">
-    </a>
-    <div class="navbar-nav">
-        <a href="/" class="nav-link active">Live Rates</a>
-        <a href="/about-us" class="nav-link">About Us</a>
-        <a href="/privacy" class="nav-link">Privacy Policy</a>
-    </div>
-    <div class="navbar-actions">
-    </div>
-</nav>
+<body class="font-sans relative overflow-x-hidden">
+<div id="gold-particles"></div>
+<main class="min-h-screen">
+   <div th:replace="~{fragments/header :: header(activePage='about')}"></div>
 
-<div class="container">
+   <section id="hero-band" class="band">
+     <div class="hero-inner">
+       <div class="reveal d1">
+         <div class="section-label">Trust, Purity, and Excellence Since 2021</div>
+         <h1><span>Our Golden Legacy</span></h1>
+       </div>
+       <div class="divider-gem reveal d2">
+         <div class="dline"></div>
+         <div class="ddiamond"></div>
+         <div class="dline right"></div>
+       </div>
+       <p class="hero-sub reveal d3">Purity Guaranteed</p>
+     </div>
+   </section>
 
-    <!-- Overview Section -->
-    <div class="content-card">
-        <div class="intro-text">
-            <p>Viindhya Group of Companies stands as a symbol of integrity, innovation, and leadership in the Gold industry. With a rich legacy built on trust, transparency, and excellence, we are redefining the Gold Sector through cutting-edge refining, Bullion Trading, Premium Jewelry, and Gold Purchase Plans.</p>
-            <p>Our commitment in delivering the purest Gold, combined with world-class service and customer-centric policies, has made us one of India's most trusted Gold Conglomerates. We strive to empower individuals and businesses by offering high-quality Gold products, innovative business opportunities, and industry-leading services.</p>
-        </div>
-    </div>
+   <div id="cards-band" class="band">
+     <div class="cards-lift">
+       <div class="qcard reveal d1">
+         <div class="qcard-icon">📅</div>
+         <h3>May 12, 2021</h3>
+         <p>Viindhya Bullion Pvt Ltd & Viindhya Jewels LLP were established.</p>
+         <p>Marked the beginning of our journey in Gold refining and bullion trading.</p>
+         <p>Entered the jewellery retail segment with a promise of purity and affordability.</p>
+       </div>
+       <div class="qcard reveal d2">
+         <div class="qcard-icon">🚀</div>
+         <h3>December 2024</h3>
+         <p>Viindhya AU Bullion LLP launched to introduce innovative Gold Purchase Plans.</p>
+         <p>Introduced innovative Gold Purchase Plans, empowering customers to build wealth through structured Gold Purchases.</p>
+         <p>Expanded our reach to retail Customers, salaried professionals, and rural markets.</p>
+       </div>
+       <div class="qcard reveal d3">
+         <div class="qcard-icon">✨</div>
+         <h3>2025 & Beyond</h3>
+         <p>Expansion plans to make Viindhya Group of Companies a global leader in Gold refining, trading, and purchase plans.</p>
+       </div>
+     </div>
+   </div>
 
-    <!-- Our Story Section -->
-    <div class="content-card">
-        <h2 class="section-title">
-            <span class="material-symbols-outlined icon">history</span> Our Story
-        </h2>
+   <section id="content-band" class="band">
+     <div class="app-container">
+       <div class="content-section-wrap">
+         <div class="text-card reveal-l">
+           <div class="text-card-header">
+             <div class="section-label">About Us</div>
+             <h2>About Viindhya Group</h2>
+             <div class="gold-bar"></div>
+           </div>
+   
+           <div class="content-blocks">
+             <div class="text-block">
+               <p>Viindhya Group of Companies stands as a symbol of integrity, innovation, and leadership in the Gold industry. With a rich legacy built on trust, transparency, and excellence, we are redefining the Gold Sector through cutting-edge refining, Bullion Trading, Premium Jewelry, and Gold Purchase Plans.</p>
+             </div>
+             <div class="text-block">
+               <p>Our commitment in delivering the purest Gold, combined with world-class service and customer-centric policies, has made us one of India's most trusted Gold Conglomerates. We strive to empower individuals and businesses by offering high-quality Gold products, innovative business opportunities, and industry-leading services.</p>
+             </div>
+             
+             <div class="text-block" style="margin-top: 15px;">
+               <div class="text-header">
+                 <h3>Our Story</h3>
+               </div>
+               <p>Viindhya Bullion Pvt Ltd is a pioneering Gold Refinery and Bullion trading company in India. We specialize in refining high-purity Gold and offer customized Bullion products for Customers, Jewelers and Businesses.</p>
+               <p>Our legacy is built on excellence, growth, and innovation in the gold industry.</p>
+             </div>
+           </div>
+         </div>
+   
+         <div class="text-card reveal-r">
+           <div class="text-card-header">
+             <div class="section-label">What We Do</div>
+             <h2>Our Services</h2>
+             <div class="gold-bar"></div>
+           </div>
+   
+           <div class="content-blocks">
+             <div class="text-block">
+               <div class="text-header">
+                 <h3><i class="fas fa-industry mr-2" style="font-size: 18px; color: var(--gold);"></i> Refining Excellence</h3>
+               </div>
+               <p>VBPL specializes in delivering premium-quality Gold in both caster and minted forms. Our refinery upholds the highest standards, certified through an ASSAY Report issued by our in-house NABL-accredited laboratory—a lab approved by the central government.</p>
+             </div>
+   
+             <div class="text-block">
+               <div class="text-header">
+                 <h3><i class="fas fa-coins mr-2" style="font-size: 18px; color: var(--gold);"></i> Custom Bullion</h3>
+               </div>
+               <p>At AULLP, we offer a wide range of customized coins and bars in both Gold and Silver, celebrating India's timeless tradition of gifting precious metals—a symbol of prosperity, love, and goodwill. Every coin or bar we create is a fusion of heritage, innovation, and personal touch, crafted to leave a lasting impression.</p>
+             </div>
+           </div>
+         </div>
+       </div>
+       
+       <div class="content-section-wrap" style="grid-template-columns: 1fr; margin-top: 48px;">
+         <div class="text-card reveal-l">
+           <div class="text-card-header">
+             <div class="section-label">Knowledge</div>
+             <h2>Understanding Gold Rates</h2>
+             <div class="gold-bar"></div>
+           </div>
+   
+           <div class="content-blocks">
+             <div class="text-block">
+               <p><strong>1.</strong> Gold rate refers to the current market price of gold, usually quoted per gram, 10 grams, or ounce, depending on the region.</p>
+               <p><strong>2.</strong> The gold rate fluctuates daily due to various factors such as global demand, inflation, interest rates, and geopolitical tensions.</p>
+               <p><strong>3.</strong> In India, the gold rate is often categorized by purity levels, with 24K being pure gold and 22K being commonly used for jewellery.</p>
+               <p><strong>4.</strong> Customers and jewellers closely monitor the gold rate to make informed decisions about buying or selling gold.</p>
+               <p><strong>5.</strong> Websites, financial apps, and news platforms frequently update the live gold rate to reflect real-time market changes.</p>
+             </div>
+           </div>
+         </div>
+       </div>
 
-        <p class="timeline-intro" style="color: var(--text-light); line-height: 1.6; margin-bottom: 2rem;">
-            Viindhya Bullion Pvt Ltd is a pioneering Gold Refinery and Bullion trading company in India. We specialize in refining high-purity Gold and offer customized Bullion products for Customers, Jewelers and Businesses.<br>
-            Our legacy is built on excellence, growth, and innovation in the gold industry.
-        </p>
+       <div class="content-section-wrap" style="grid-template-columns: 1fr; margin-top: 48px; text-align: center; margin-bottom: 20px;">
+           <div class="text-card reveal-r" style="background: linear-gradient(135deg, var(--hero-left) 0%, var(--hero-mid) 100%); border: none;">
+               <h3 style="font-size: 28px; font-weight: 600; color: #fff; margin-bottom: 16px; font-family: 'Playfair Display', serif;">Ready to Purchase in Gold?</h3>
+               <p style="color: rgba(255,255,255,0.7); margin-bottom: 24px; font-size: 16px;">Join thousands of satisfied customers who trust Viindhya Bullion for their gold Purchases.</p>
+               <a href="https://shop-dev.viindhyagroup.com/contact-us" target="_blank" rel="noopener noreferrer">
+                  <button class="cta-btn">
+                     Contact Us Today
+                  </button>
+               </a>
+           </div>
+       </div>
+     </div>
+   </section>
 
-        <div class="timeline-item" style="margin-bottom: 1.5rem;">
-            <div class="timeline-date" style="font-weight: 700; margin-bottom: 0.4rem;">May 12, 2021</div>
-            <div class="timeline-desc" style="color: var(--text-light); line-height: 1.6;">
-                Viindhya Bullion Pvt Ltd & Viindhya Jewels LLP were established.<br>
-                Marked the beginning of our journey in Gold refining and bullion trading.<br>
-                Entered the jewellery retail segment with a promise of purity and affordability.
-            </div>
-        </div>
+   <div th:replace="~{fragments/footer :: footer}"></div>
+</main>
 
-        <div class="timeline-item" style="margin-bottom: 1.5rem;">
-            <div class="timeline-date" style="font-weight: 700; margin-bottom: 0.4rem;">December 2024</div>
-            <div class="timeline-desc" style="color: var(--text-light); line-height: 1.6;">
-                Viindhya AU Bullion LLP launched to introduce innovative Gold Purchase Plans.<br>
-                Introduced innovative Gold Purchase Plans, empowering customers to build wealth through structured Gold Purchases.<br>
-                Expanded our reach to retail Customers, salaried professionals, and rural markets.
-            </div>
-        </div>
+<script>
+   document.addEventListener('DOMContentLoaded', function() {
 
-        <div class="timeline-item">
-            <div class="timeline-date" style="font-weight: 700; margin-bottom: 0.4rem;">2025 & Beyond</div>
-            <div class="timeline-desc" style="color: var(--text-light); line-height: 1.6;">
-                Expansion plans to make Viindhya Group of Companies a global leader in Gold refining, trading, and purchase plans.
-            </div>
-        </div>
-    </div>
 
-    <!-- Our Services Section -->
-    <div class="content-card">
-        <h2 class="section-title" style="margin-bottom: 2rem;">
-            <span class="material-symbols-outlined icon">star</span> Our Services
-        </h2>
+      const animateOnScroll = function() {
+         const elements = document.querySelectorAll('.reveal, .reveal-l, .reveal-r');
 
-        <div class="services-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem;">
-            <!-- Refining Excellence -->
-            <div>
-                <h3 class="service-column-title" style="font-weight: 700; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
-                    <span class="material-symbols-outlined" style="color: var(--gold-primary);">precision_manufacturing</span> Refining Excellence
-                </h3>
-                <p class="service-desc" style="color: var(--text-light); line-height: 1.6;">
-                    VBPL specializes in delivering premium-quality Gold in both caster and minted forms. Our refinery upholds the highest standards, certified through an ASSAY Report issued by our in-house NABL-accredited laboratory—a lab approved by the central government.
-                </p>
-            </div>
+         elements.forEach(element => {
+            const elementPosition = element.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
 
-            <!-- Custom Bullion -->
-            <div>
-                <h3 class="service-column-title" style="font-weight: 700; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
-                    <span class="material-symbols-outlined" style="color: var(--gold-primary);">layers</span> Custom Bullion
-                </h3>
-                <p class="service-desc" style="color: var(--text-light); line-height: 1.6;">
-                    At AULLP, we offer a wide range of customized coins and bars in both Gold and Silver, celebrating India's timeless tradition of gifting precious metals—a symbol of prosperity, love, and goodwill. Every coin or bar we create is a fusion of heritage, innovation, and personal touch, crafted to leave a lasting impression.
-                </p>
-            </div>
-        </div>
-    </div>
+            if (elementPosition < windowHeight - 50) {
+               element.classList.add('animate__animated');
+               
+               if (element.classList.contains('reveal-l')) {
+                 element.classList.add('animate__fadeInLeft');
+               } else if (element.classList.contains('reveal-r')) {
+                 element.classList.add('animate__fadeInRight');
+               } else {
+                 element.classList.add('animate__fadeInUp');
+               }
+            }
+         });
+      };
 
-    <!-- Understanding Gold Rates Section -->
-    <div class="rates-info-card" style="background-color: #f4f8fb; border-radius: 8px; padding: 2.5rem;">
-        <h2 class="rates-title" style="font-size: 1.3rem; font-weight: 700; color: #1e3a56; margin-bottom: 1.5rem;">Understanding Gold Rates</h2>
-        <ul class="rates-list" style="list-style: none;">
-            <li style="color: #3a5266; line-height: 1.6; margin-bottom: 1rem;">1. Gold rate refers to the current market price of gold, usually quoted per gram, 10 grams, or ounce, depending on the region.</li>
-            <li style="color: #3a5266; line-height: 1.6; margin-bottom: 1rem;">2. The gold rate fluctuates daily due to various factors such as global demand, inflation, interest rates, and geopolitical tensions.</li>
-            <li style="color: #3a5266; line-height: 1.6; margin-bottom: 1rem;">3. In India, the gold rate is often categorized by purity levels, with 24K being pure gold and 22K being commonly used for jewellery.</li>
-            <li style="color: #3a5266; line-height: 1.6; margin-bottom: 1rem;">4. Customers and jewellers closely monitor the gold rate to make informed decisions about buying or selling gold.</li>
-            <li style="color: #3a5266; line-height: 1.6;">5. Websites, financial apps, and news platforms frequently update the live gold rate to reflect real-time market changes.</li>
-        </ul>
-    </div>
-
-</div>
+      window.addEventListener('scroll', animateOnScroll);
+      // Initial trigger
+      setTimeout(animateOnScroll, 100);
+   });
+</script>
 </body>
 </html>

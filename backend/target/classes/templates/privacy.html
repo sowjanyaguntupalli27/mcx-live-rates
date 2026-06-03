@@ -1,150 +1,519 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    <style>
-        :root {
-            --bg-body: #f1f6f2;
-            --text-dark: #0f241d;
-            --text-light: #576d62;
-            --gold-primary: #cda250;
-            --gold-bright: #dfb76c;  /* Updated to Match Image */
-            --gold-light: #f5eedc;
-            --green-dark: #303e49;
-            --green-card: #f8faf9;
-            --white: #ffffff;
-            --border-color: #e2e8e4;
-            --red-text: #c0392b;
-            --green-text: #cda250;
-        }
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <title>Privacy Policy - Viindhya Bullion</title>
+   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+   <style>
+      :root {
+         --primary: #305776;
+         --primary-dark: #1e3a50;
+         --primary-light: #3d6b90;
+         --gold: #d3a724;
+         --gold-bright: #fbc523;
+         --gold-pale: rgba(211, 167, 36, 0.1);
+         --hero-left: #161f27;
+         --hero-mid: #184166;
+         --bg: #eaeef1;
+         --white: #ffffff;
+         --text: #333333;
+         --text-sub: #5a6a7a;
+         --text-muted: #8a9aaa;
+         --border: rgba(48, 87, 118, 0.14);
+         --border-gold: rgba(211, 167, 36, 0.22);
+         --shadow: 0 8px 32px rgba(22, 31, 39, 0.12);
+         --shadow-hover: 0 16px 48px rgba(22, 31, 39, 0.18);
+         --radius: 20px;
+         --transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      
+      body {
+         background-color: var(--bg);
+         color: var(--text);
+      }
+      
+      @keyframes blink {
+         0% { opacity: 1; }
+         50% { opacity: 0.7; }
+         100% { opacity: 1; }
+      }
+      .blink-text {
+         animation: blink 1.5s linear infinite;
+      }
+      .nav-link {
+         position: relative;
+         padding-bottom: 5px;
+      }
+      .nav-link::after {
+         content: '';
+         position: absolute;
+         width: 0;
+         height: 2px;
+         bottom: 0;
+         left: 0;
+         background-color: #CA8A04;
+         transition: width 0.3s ease;
+      }
+      .nav-link:hover::after {
+         width: 100%;
+      }
+      .gold-gradient {
+         background: linear-gradient(to right, #303e49 0%, #303e49 25%, #3f5060 50%, #303e49 75%, #303e49 100%);
+      }
+      .footer-link {
+         position: relative;
+      }
+      .footer-link:after {
+         content: '';
+         position: absolute;
+         width: 0;
+         height: 1px;
+         bottom: 0;
+         left: 0;
+         background-color: #CA8A04;
+         transition: width 0.3s ease;
+      }
+      .footer-link:hover:after {
+         width: 100%;
+      }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Lato', sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-dark);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        h1, h2, h3, h4, h5, .serif {
-            font-family: 'Lato', sans-serif;
-        }
-
-        /* --- Navbar Styles --- */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 3rem;
-            background-color: #303e49;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            height: 100px;
-        }
-
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            height: 100%;
-        }
-
-        .navbar-logo {
-            height: 140px;
-            width: auto;
-            display: block;
-            object-fit: contain;
-            margin-top: -5px;
-        }
-
-        .navbar-nav {
-            display: flex;
-            gap: 2.5rem;
-            align-items: center;
-            height: 40%;
-        }
-
-        .nav-link {
-            text-decoration: none;
-            color: var(--gold-primary);
-            font-weight: 500;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            height: 100%;
-            position: relative;
-            transition: color 0.2s ease;
-        }
-
-        .nav-link:hover {
-            color: var(--gold-bright);
-        }
-
-        .nav-link.active {
-            color: var(--gold-bright);
-        }
-
-        .nav-link.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: var(--gold-bright);
-        }
-
-        /* --- Content Container --- */
-        .container {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 2rem;
-            width: 100%;
-        }
-
-        .space-y-6 > * + * {
-            margin-top: 1.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .navbar {
-                padding: 0.5rem 1.5rem;
-            }
-            .navbar-nav {
-                display: none;
-            }
-        }
-
-    </style>
-    <title>Viindhya Bullion - Live Rates</title>
+      /* Angular Design Styles */
+      .band {
+        width: 100%;
+        position: relative;
+      }
+      .app-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 48px;
+      }
+      .section-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 10px;
+      }
+      .section-label::before {
+        content: '';
+        width: 28px;
+        height: 1.5px;
+        background: linear-gradient(90deg, var(--gold-bright), var(--gold));
+        border-radius: 2px;
+        display: block;
+      }
+      .divider-gem {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        margin: 18px 0 24px;
+      }
+      .divider-gem .dline {
+        flex: 1;
+        height: 1px;
+        max-width: 80px;
+        background: linear-gradient(90deg, transparent, var(--gold));
+      }
+      .divider-gem .dline.right {
+        background: linear-gradient(90deg, var(--gold), transparent);
+      }
+      .divider-gem .ddiamond {
+        width: 9px;
+        height: 9px;
+        background: var(--gold-bright);
+        transform: rotate(45deg);
+        margin: 0 12px;
+        box-shadow: 0 0 12px rgba(251, 197, 35, 0.4);
+      }
+      .reveal, .reveal-l, .reveal-r {
+        opacity: 0; 
+      }
+      .animate__animated {
+        opacity: 1 !important;
+      }
+      #hero-band {
+        background: linear-gradient(105deg, var(--hero-left) 0%, var(--hero-left) 20%, var(--hero-mid) 50%, var(--hero-left) 80%, var(--hero-left) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        padding: 80px 24px;
+      }
+      #hero-band::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 20% 60%, rgba(48, 87, 118, 0.35) 0%, transparent 55%), radial-gradient(circle at 80% 40%, rgba(24, 65, 102, 0.4) 0%, transparent 55%);
+        pointer-events: none;
+      }
+      #hero-band::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(-45deg, transparent, transparent 60px, rgba(211, 167, 36, 0.025) 60px, rgba(211, 167, 36, 0.025) 61px);
+        pointer-events: none;
+      }
+      .hero-inner { position: relative; z-index: 2; max-width: 680px; }
+      .hero-inner h1 {
+        font-size: clamp(28px, 7vw, 40px);
+        font-weight: 600;
+        line-height: 1.1;
+        color: #fff;
+        margin-bottom: 16px;
+      }
+      .hero-inner h1 span { color: var(--gold-bright); font-style: normal; }
+      .hero-sub {
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.65);
+        line-height: 1.75;
+        font-weight: 300;
+        margin-top: 8px;
+      }
+      #cards-band { background: var(--bg); padding: 0; position: relative; z-index: 3; margin-top: -1px; }
+      .cards-lift {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+        padding: 0 48px;
+        transform: translateY(-35px);
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .qcard {
+        background: var(--white);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        padding: 36px 28px;
+        box-shadow: var(--shadow);
+        text-align: center;
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+      }
+      .qcard::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--primary-light), var(--gold));
+      }
+      .qcard:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); border-color: rgba(48, 87, 118, 0.28); }
+      .qcard-icon {
+        width: 60px; height: 60px; border-radius: 18px; margin: 0 auto 20px;
+        background: linear-gradient(135deg, rgba(48, 87, 118, 0.08), rgba(48, 87, 118, 0.15));
+        border: 1.5px solid rgba(48, 87, 118, 0.18);
+        display: flex; align-items: center; justify-content: center;
+        transition: var(--transition); font-size: 28px; color: var(--primary);
+      }
+      .qcard:hover .qcard-icon { background: var(--primary); transform: scale(1.08) rotate(6deg); border-color: transparent; }
+      .qcard:hover .qcard-icon i { color: #fff !important; }
+      .qcard h3 { font-size: 22px; font-weight: 600; color: var(--primary); margin-bottom: 10px; }
+      .qcard p { font-size: 14px; color: var(--text-sub); line-height: 1.65; font-weight: 300; margin-bottom: 20px; text-align: left; }
+      #content-band { background: var(--bg); padding: 20px 0 30px; }
+      .content-section-wrap { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: stretch; }
+      @media (min-width: 900px) { .content-section-wrap { grid-template-columns: 1fr 1fr; } }
+      .text-card {
+        background: var(--white); border-radius: var(--radius); border: 1px solid var(--border);
+        box-shadow: var(--shadow); padding: 48px 44px;
+      }
+      .text-card-header { margin-bottom: 30px; }
+      .text-card-header h2 { font-size: 32px; font-weight: 600; color: var(--primary); line-height: 1.2; margin-top: 5px; }
+      .gold-bar {
+        width: 48px; height: 3px; border-radius: 3px;
+        background: linear-gradient(90deg, var(--gold-bright), var(--gold)); margin: 12px 0 0;
+      }
+      .content-blocks { display: flex; flex-direction: column; gap: 28px; }
+      .text-block .text-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+      .text-block .text-header h3 { font-size: 22px; font-weight: 600; color: var(--primary); margin: 0; }
+      .text-block p { font-size: 15px; color: var(--text-sub); line-height: 1.7; font-weight: 300; margin: 0 0 10px 0; }
+      
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--gold);
+        color: #1a1008;
+        border-radius: 50px;
+        padding: 12px 28px;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        transition: var(--transition);
+        text-transform: uppercase;
+        cursor: pointer;
+        border: none;
+        box-shadow: 0 4px 15px rgba(211, 167, 36, 0.3);
+      }
+      .cta-btn:hover {
+        background: var(--gold-bright);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(211, 167, 36, 0.4);
+      }
+      
+      @media (max-width: 768px) {
+        .app-container { padding: 0 24px; }
+        .cards-lift { padding: 0 24px; }
+        .text-card { padding: 32px 24px; }
+        .text-card-header h2 { font-size: 24px; }
+      }
+   </style>
+   <script src="https://cdn.tailwindcss.com"></script>
+   <script>
+      tailwind.config = {
+         theme: {
+            extend: {
+               colors: {
+                  yellow: { 50: "#FFFBEB", 600: "#CA8A04" },
+                  stone: { 50: "#FAFAF9" },
+                  slate: { 900: "#0F172A" },
+                  zinc: { 300: "#D4D4D8" },
+               },
+               fontFamily: {
+                  sans: ["DM Sans", "sans-serif"],
+                  serif: ["Playfair Display", "serif"],
+               },
+            },
+         },
+      };
+   </script>
 </head>
-<body>
-<nav class="navbar">
-    <a href="#" class="navbar-brand">
-        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/43dadeeb770ebd8e68499bd816c80e8bbfcff1aa?placeholderIfAbsent=true" alt="Viindhya Bullion Logo" class="navbar-logo">
-    </a>
-    <div class="navbar-nav">
-        <a href="/" class="nav-link active">Live Rates</a>
-        <a href="/about-us" class="nav-link">About Us</a>
-        <a href="/privacy" class="nav-link">Privacy Policy</a>
-    </div>
-    <div class="navbar-actions">
-        <!-- Space allocated for buttons or layout symmetry -->
-    </div>
-</nav>
+<body class="font-sans relative overflow-x-hidden">
+<div id="gold-particles"></div>
+<main class="min-h-screen">
+   <div th:replace="~{fragments/header :: header(activePage='privacy')}"></div>
 
-<div class="container">
-</div>
+   <section id="hero-band" class="band">
+     <div class="hero-inner">
+       <div class="reveal d1">
+         <div class="section-label">Last Updated: June 2025</div>
+         <h1><span>Privacy Policy</span></h1>
+       </div>
+       <div class="divider-gem reveal d2">
+         <div class="dline"></div>
+         <div class="ddiamond"></div>
+         <div class="dline right"></div>
+       </div>
+       <p class="hero-sub reveal d3">Your trust and data security are our top priorities</p>
+     </div>
+   </section>
+
+   <div id="cards-band" class="band">
+     <div class="cards-lift">
+       <div class="qcard reveal d1">
+         <div class="qcard-icon"><i class="fas fa-lock" style="font-size: 28px; color: var(--gold); transition: all 0.3s ease;"></i></div>
+         <h3>Data Protection</h3>
+         <p style="text-align: center;">We implement industry-standard security measures to protect your information</p>
+       </div>
+       <div class="qcard reveal d2">
+         <div class="qcard-icon"><i class="fas fa-shield-alt" style="font-size: 28px; color: var(--gold); transition: all 0.3s ease;"></i></div>
+         <h3>Your Rights</h3>
+         <p style="text-align: center;">You have full control over your personal data and how it's used</p>
+       </div>
+       <div class="qcard reveal d3">
+         <div class="qcard-icon"><i class="fas fa-user-secret" style="font-size: 28px; color: var(--gold); transition: all 0.3s ease;"></i></div>
+         <h3>Transparency</h3>
+         <p style="text-align: center;">We clearly explain what data we collect and why</p>
+       </div>
+     </div>
+   </div>
+
+   <section id="content-band" class="band">
+     <div class="app-container">
+       <div class="content-section-wrap" style="grid-template-columns: 1fr;">
+         <div class="text-card reveal-l">
+           <div class="text-card-header" style="text-align: center;">
+             <div class="section-label">Our Privacy Commitment</div>
+             <h2>Privacy Policy for Live Rates</h2>
+             <div class="gold-bar" style="margin: 12px auto 0;"></div>
+           </div>
+   
+           <div class="content-blocks">
+             <div class="text-block">
+               <p>This Privacy Policy applies to the mobile application Live Rates, developed and maintained by Viindhya Group, as listed on the Google Play Store. This Privacy Policy describes our policies and procedures on the collection, use, and disclosure of your information when you use the Service and informs you about your privacy rights and how the law protects you.</p>
+               <p>We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy.</p>
+             </div>
+
+             <div class="text-block">
+               <div class="text-header">
+                 <h3>1. Interpretation and Definitions</h3>
+               </div>
+               <p><strong>Interpretation:</strong> Words with the first letter capitalized have specific meanings defined under the conditions below.</p>
+               <p><strong>Definitions:</strong> For the purposes of this Privacy Policy:</p>
+               <ul style="list-style-type: disc; padding-left: 20px; color: var(--text-sub); font-size: 15px; font-weight: 300; line-height: 1.7; margin-bottom: 10px;">
+                  <li><strong>Account:</strong> A unique account created for You to access our Service.</li>
+                  <li><strong>Affiliate:</strong> Entity that controls or is controlled by the Company.</li>
+                  <li><strong>Company:</strong> Refers to PVT LTD, Hyderabad – 500018.</li>
+                  <li><strong>Cookies:</strong> Small files that track browsing history and preferences.</li>
+                  <li><strong>Country:</strong> Refers to Telangana, India.</li>
+                  <li><strong>Device:</strong> Any device that can access the Service.</li>
+                  <li><strong>Personal Data:</strong> Any information that relates to an identifiable individual.</li>
+                  <li><strong>Service:</strong> Refers to the Live Rates mobile application and the Website.</li>
+                  <li><strong>Website:</strong> <a href="https://liverates.viindhyagroup.com/" target="_blank" rel="noopener noreferrer" style="color: var(--primary);">liverates.viindhyagroup.com</a></li>
+                  <li><strong>You:</strong> The user accessing the Service.</li>
+               </ul>
+             </div>
+
+             <div class="text-block">
+               <div class="text-header">
+                 <h3>2. Collecting and Using Your Personal Data</h3>
+               </div>
+               <p><strong>Personal Data</strong> may include: Email address, First and last name, Phone number, Address details.</p>
+               <p><strong>Usage Data</strong> automatically collected may include: IP address, Browser type, Pages visited, Visit timestamps, Device type and identifiers.</p>
+             </div>
+
+             <div class="text-block">
+               <div class="text-header">
+                 <h3>3. Tracking Technologies and Cookies</h3>
+               </div>
+               <p>We use cookies and similar technologies to monitor activity and improve our services.</p>
+               <ul style="list-style-type: none; padding-left: 0; color: var(--text-sub); font-size: 15px; font-weight: 300; line-height: 1.7;">
+                  <li style="margin-bottom: 8px;"><i class="fas fa-cookie-bite" style="color: var(--gold); margin-right: 8px;"></i> <strong>Cookies:</strong> Can be refused in browser settings. Essential for proper website functionality.</li>
+                  <li><i class="fas fa-chart-line" style="color: var(--gold); margin-right: 8px;"></i> <strong>Web Beacons:</strong> Used for email and page analytics to improve user experience.</li>
+               </ul>
+             </div>
+
+             <div class="text-block">
+               <div class="text-header">
+                 <h3>4. Use of Your Personal Data</h3>
+               </div>
+               <p>We may use data for:</p>
+               <ul style="list-style-type: none; padding-left: 0; color: var(--text-sub); font-size: 15px; font-weight: 300; line-height: 1.7;">
+                  <li><i class="fas fa-check" style="color: var(--primary-light); margin-right: 8px;"></i> <strong>Service delivery:</strong> To provide and maintain our services</li>
+                  <li><i class="fas fa-check" style="color: var(--primary-light); margin-right: 8px;"></i> <strong>Account management:</strong> To manage your registration</li>
+                  <li><i class="fas fa-check" style="color: var(--primary-light); margin-right: 8px;"></i> <strong>Contractual obligations:</strong> To fulfill our contracts</li>
+                  <li><i class="fas fa-check" style="color: var(--primary-light); margin-right: 8px;"></i> <strong>Communication:</strong> To contact you with updates</li>
+                  <li><i class="fas fa-check" style="color: var(--primary-light); margin-right: 8px;"></i> <strong>Marketing:</strong> To send promotional communications (with consent)</li>
+                  <li><i class="fas fa-check" style="color: var(--primary-light); margin-right: 8px;"></i> <strong>Internal analysis:</strong> To improve our services and operations</li>
+                  <li><i class="fas fa-check" style="color: var(--primary-light); margin-right: 8px;"></i> <strong>Data transfers:</strong> For secure business transfers or mergers</li>
+               </ul>
+             </div>
+
+             <div class="text-block">
+               <div class="text-header">
+                 <h3>5. Sharing of Your Personal Data</h3>
+               </div>
+               <ul style="list-style-type: disc; padding-left: 20px; color: var(--text-sub); font-size: 15px; font-weight: 300; line-height: 1.7;">
+                  <li>With service providers for business operations</li>
+                  <li>During business transfers or acquisitions</li>
+                  <li>With affiliates for consistent service</li>
+                  <li>With your explicit consent</li>
+               </ul>
+             </div>
+
+             <div class="text-block">
+               <div class="text-header">
+                 <h3>6. Retention of Your Personal Data</h3>
+               </div>
+               <p>We retain your data as required by law, to resolve disputes, and to maintain records.</p>
+             </div>
+
+             <div class="text-block">
+               <div class="text-header">
+                 <h3>7. Transfer of Your Personal Data</h3>
+               </div>
+               <p>Your information may be processed in locations outside your region, always with appropriate safeguards in place.</p>
+             </div>
+
+             <div class="text-block">
+               <div class="text-header">
+                 <h3>8. Delete Your Personal Data</h3>
+               </div>
+               <p>You may request deletion of your personal data from our records at any time by contacting us through the provided channels.</p>
+             </div>
+
+             <div class="text-block">
+               <div class="text-header">
+                 <h3>9. Disclosure of Your Personal Data</h3>
+               </div>
+               <p><strong>Business Transactions:</strong> Your data may be transferred during a merger or acquisition, with appropriate privacy protections.</p>
+               <p><strong>Law Enforcement:</strong> We may disclose your data if legally required to comply with applicable laws and regulations.</p>
+             </div>
+
+             <div class="text-block">
+               <div class="text-header">
+                 <h3>10. Security of Your Personal Data</h3>
+               </div>
+               <p>We apply industry-standard technical and organizational safeguards to protect your data against unauthorized access, alteration, disclosure, or destruction. Our security measures include encryption, access controls, and regular security audits.</p>
+             </div>
+
+             <div class="text-block">
+               <div class="text-header">
+                 <h3>11. Children's Privacy</h3>
+               </div>
+               <p>We do not knowingly collect data from users under 13 years of age. If we become aware that we have collected personal data from a child without parental consent, we will take steps to remove that information.</p>
+             </div>
+
+             <div class="text-block">
+               <div class="text-header">
+                 <h3>12. Links to Other Websites</h3>
+               </div>
+               <p>We are not responsible for the content or privacy practices of third-party websites linked from our Service. We encourage you to review the privacy policies of any external sites you visit.</p>
+             </div>
+
+             <div class="text-block">
+               <div class="text-header">
+                 <h3>13. Changes to This Privacy Policy</h3>
+               </div>
+               <p>We may update this policy periodically to reflect changes in our practices or legal requirements. We will notify you of any significant changes by posting the new policy on this page and updating the "Last Updated" date. We recommend reviewing this Privacy Policy regularly to stay informed about how we protect your information.</p>
+             </div>
+
+           </div>
+         </div>
+
+         <div class="content-section-wrap" style="grid-template-columns: 1fr; margin-top: 48px; text-align: center; margin-bottom: 20px;">
+           <div class="text-card reveal-r" style="background: linear-gradient(135deg, var(--hero-left) 0%, var(--hero-mid) 100%); border: none;">
+               <h3 style="font-size: 28px; font-weight: 600; color: #fff; margin-bottom: 16px; font-family: 'Playfair Display', serif;">Have Privacy Questions?</h3>
+               <p style="color: rgba(255,255,255,0.7); margin-bottom: 24px; font-size: 16px;">Our privacy team is available to address any concerns you may have about your personal data.</p>
+               <a href="mailto:info@viindhyabullion.com">
+                  <button class="cta-btn">
+                     Contact Privacy Team
+                  </button>
+               </a>
+           </div>
+         </div>
+       </div>
+     </div>
+   </section>
+
+   <div th:replace="~{fragments/footer :: footer}"></div>
+</main>
+
+<script>
+   document.addEventListener('DOMContentLoaded', function() {
+      const animateOnScroll = function() {
+         const elements = document.querySelectorAll('.reveal, .reveal-l, .reveal-r');
+
+         elements.forEach(element => {
+            const elementPosition = element.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+
+            if (elementPosition < windowHeight - 50) {
+               element.classList.add('animate__animated');
+               
+               if (element.classList.contains('reveal-l')) {
+                 element.classList.add('animate__fadeInLeft');
+               } else if (element.classList.contains('reveal-r')) {
+                 element.classList.add('animate__fadeInRight');
+               } else {
+                 element.classList.add('animate__fadeInUp');
+               }
+            }
+         });
+      };
+
+      window.addEventListener('scroll', animateOnScroll);
+      // Initial trigger
+      setTimeout(animateOnScroll, 100);
+   });
+</script>
 </body>
 </html>

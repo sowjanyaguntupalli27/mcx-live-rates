@@ -1,19 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        yellow: { 50: "#FFFBEB", 600: "#CA8A04" },
+                        stone: { 50: "#FAFAF9" },
+                        slate: { 900: "#0F172A" },
+                        zinc: { 300: "#D4D4D8" },
+                    },
+                    fontFamily: {
+                        sans: ["DM Sans", "sans-serif"],
+                        serif: ["Playfair Display", "serif"],
+                    },
+                },
+            },
+        };
+    </script>
     <style>
         :root {
             --bg-body: #f1f6f2;
             --text-dark: #0f241d;
             --text-light: #576d62;
             --gold-primary: #cda250;
-            --gold-bright: #dfb76c;  /* Updated to Match Image */
+            --gold-bright: #dfb76c;
             --gold-light: #f5eedc;
             --green-dark: #0f3022;
             --green-card: #f8faf9;
@@ -39,7 +66,12 @@
         }
 
 
-        h1, h2, h3, h4, h5, .serif {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        .serif {
             font-family: 'Lato', serif;
         }
 
@@ -50,79 +82,37 @@
             letter-spacing: 0.5px;
         }
 
-        /* --- Navbar Styles --- */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 3rem;
-            background-color: #303e49;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            height: 100px;
-        }
-
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            height: 100%;
-        }
-
-        .navbar-logo {
-            height: 140px;
-            width: auto;
-            display: block;
-            object-fit: contain;
-            margin-top: -5px;
-        }
-
-        .navbar-nav {
-            display: flex;
-            gap: 2.5rem;
-            align-items: center;
-            height: 40%;
-        }
-
         .nav-link {
-            text-decoration: none;
-            color: var(--gold-primary);
-            font-weight: 500;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            height: 100%;
             position: relative;
-            transition: color 0.2s ease;
+            padding-bottom: 5px;
         }
 
-        .nav-link:hover {
-            color: var(--gold-bright);
-        }
-
-        .nav-link.active {
-            color: var(--gold-bright);
-        }
-
-        .nav-link.active::after {
+        .nav-link::after {
             content: '';
             position: absolute;
-            bottom: 0; /* Snaps perfectly onto the navbar bottom border line */
+            width: 0;
+            height: 2px;
+            bottom: 0;
             left: 0;
-            width: 100%;
-            height: 2px; /* Slightly thicker premium weight line */
-            background-color: var(--gold-bright);
+            background-color: #CA8A04;
+            transition: width 0.3s ease;
         }
 
+        .nav-link:hover::after {
+            width: 100%;
+        }
 
-        /* --- Content Container --- */
-        .container {
+        .gold-gradient {
+            background: linear-gradient(to right, #303e49 0%, #303e49 25%, #3f5060 50%, #303e49 75%, #303e49 100%);
+        }
+
+        .main-container {
             max-width: 1300px;
             margin: 0 auto;
             padding: 2rem;
             width: 100%;
         }
 
-        /* Rates Section */
         .rates-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -134,7 +124,7 @@
             background: var(--green-card);
             border-radius: 8px;
             padding: 2rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
         }
 
         .rates-header {
@@ -229,81 +219,67 @@
                 grid-template-columns: 1fr;
             }
         }
-
-        @media (max-width: 768px) {
-            .navbar {
-                padding: 0.5rem 1.5rem;
-            }
-            .navbar-nav {
-                display: none; /* Can be handled via a mobile layout script toggle if desired */
-            }
-        }
     </style>
     <title>Viindhya Bullion - Live Rates</title>
 </head>
-<body>
-<nav class="navbar">
-    <a href="/" class="navbar-brand">
-        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/43dadeeb770ebd8e68499bd816c80e8bbfcff1aa?placeholderIfAbsent=true" alt="Viindhya Bullion Logo" class="navbar-logo">
-    </a>
-    <div class="navbar-nav">
-        <a href="/" class="nav-link active">Live Rates</a>
-        <a href="/about-us" class="nav-link">About Us</a>
-        <a href="/privacy" class="nav-link">Privacy Policy</a>
-    </div>
-    <div class="navbar-actions">
-        <!-- Space allocated for buttons or layout symmetry -->
-    </div>
-</nav>
 
-<div class="container">
-    <!-- Rates Section -->
-    <div class="rates-section" id="rates-container">
-        <div class="loading">
-            <span class="material-symbols-outlined" style="font-size: 2rem; animation: spin 2s linear infinite;">sync</span>
-            <p style="margin-top: 1rem;">Fetching live rates...</p>
-            <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
+<body class="relative overflow-x-hidden">
+    <div th:replace="~{fragments/header :: header(activePage='home')}"></div>
+
+    <div class="main-container">
+        <div class="rates-section" id="rates-container">
+            <div class="loading">
+                <span class="material-symbols-outlined"
+                    style="font-size: 2rem; animation: spin 2s linear infinite;">sync</span>
+                <p style="margin-top: 1rem;">Fetching live rates...</p>
+                <style>
+                    @keyframes spin {
+                        100% {
+                            transform: rotate(360deg);
+                        }
+                    }
+                </style>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
+    <script>
 
-    const formatCurrency = (value) => {
-        return new Intl.NumberFormat('en-IN').format(value);
-    };
+        const formatCurrency = (value) => {
+            return new Intl.NumberFormat('en-IN').format(value);
+        };
 
-    const transformPurityText = (item) => {
-        if (!item.purity) return `Purity ${item.purityValue || ''}`;
+        const transformPurityText = (item) => {
+            if (!item.purity) return `Purity ${item.purityValue || ''}`;
 
-        let rawPurity = item.purity.replace('PURITY_', '');
-        let parts = rawPurity.split('_');
-        let purityDisplay = parts.map(p => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase()).join(' ');
+            let rawPurity = item.purity.replace('PURITY_', '');
+            let parts = rawPurity.split('_');
+            let purityDisplay = parts.map(p => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase()).join(' ');
 
-        if (item.purityValue) {
-            purityDisplay += ` (${item.purityValue})`;
-        }
-        return purityDisplay;
-    };
+            if (item.purityValue) {
+                purityDisplay += ` (${item.purityValue})`;
+            }
+            return purityDisplay;
+        };
 
-    const generateRowsHtml = (data) => {
-        if (!Array.isArray(data)) return '';
-        return data.map(item => {
-            const buy = item.ratePerGram || 0;
-            const purityLabel = transformPurityText(item);
-            return `
+        const generateRowsHtml = (data) => {
+            if (!Array.isArray(data)) return '';
+            return data.map(item => {
+                const buy = item.ratePerGram || 0;
+                const purityLabel = transformPurityText(item);
+                return `
             <tr>
                 <td class="col-purity">${purityLabel}</td>
                 <td class="col-buy">₹${formatCurrency(buy)}</td>
             </tr>
         `;
-        }).join('');
-    };
+            }).join('');
+        };
 
 
-    const createGoldTable = (data, timeString) => {
-        if (!data || data.length === 0) return '';
-        return `
+        const createGoldTable = (data, timeString) => {
+            if (!data || data.length === 0) return '';
+            return `
         <div class="rates-card gold-card">
             <div class="rates-header">
                 <div class="rates-title">
@@ -325,12 +301,11 @@
             </table>
         </div>
     `;
-    };
+        };
 
-
-    const createSilverTable = (data, timeString) => {
-        if (!data || data.length === 0) return '';
-        return `
+        const createSilverTable = (data, timeString) => {
+            if (!data || data.length === 0) return '';
+            return `
         <div class="rates-card silver-card">
             <div class="rates-header">
                 <div class="rates-title">
@@ -352,58 +327,57 @@
             </table>
         </div>
     `;
-    };
+        };
 
+        const fetchRates = async () => {
+            try {
+                const response = await fetch('/mcxRates/purities');
+                if (!response.ok) throw new Error('Data endpoint unreachable');
+                const data = await response.json();
 
-    const fetchRates = async () => {
-        try {
-            const response = await fetch('/mcxRates/purities');
-            if (!response.ok) throw new Error('Data endpoint unreachable');
-            const data = await response.json();
+                const container = document.getElementById('rates-container');
+                if (!container) return;
 
-            const container = document.getElementById('rates-container');
-            if (!container) return;
+                const hasGold = data && data.gold && Array.isArray(data.gold) && data.gold.length > 0;
+                const hasSilver = data && data.silver && Array.isArray(data.silver) && data.silver.length > 0;
 
-            const hasGold = data && data.gold && Array.isArray(data.gold) && data.gold.length > 0;
-            const hasSilver = data && data.silver && Array.isArray(data.silver) && data.silver.length > 0;
-
-            if (!hasGold && !hasSilver) {
-                container.innerHTML = `
+                if (!hasGold && !hasSilver) {
+                    container.innerHTML = `
                 <div class="loading" style="color: var(--text-light); grid-column: 1 / -1;">
                     <span class="material-symbols-outlined" style="font-size: 2.5rem; color: var(--gold-primary);">trending_flat</span>
                     <p style="margin-top: 1.25rem;">No active market trades posted for this session.</p>
                 </div>
             `;
-                return;
-            }
+                    return;
+                }
 
-            const now = new Date();
-            const timestamp = `@ ${now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'})}`;
+                const now = new Date();
+                const timestamp = `@ ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`;
 
-            container.innerHTML = `
+                container.innerHTML = `
             ${hasGold ? createGoldTable(data.gold, timestamp) : ''}
             ${hasSilver ? createSilverTable(data.silver, timestamp) : ''}
         `;
-        } catch (error) {
-            console.error('System Exception Caught on Render:', error);
-            const container = document.getElementById('rates-container');
-            if (container) {
-                container.innerHTML = `
+            } catch (error) {
+                console.error('System Exception Caught on Render:', error);
+                const container = document.getElementById('rates-container');
+                if (container) {
+                    container.innerHTML = `
                 <div class="loading" style="color: var(--red-text); grid-column: 1 / -1;">
                     <span class="material-symbols-outlined" style="font-size: 2.5rem;">error</span>
                     <p style="margin-top: 1.25rem; font-weight: 700;">Unable to connect to dynamic rate services.</p>
                     <p style="font-size: 0.9rem; margin-top: 0.25rem; color: var(--text-light)">Retrying automatically in the background...</p>
                 </div>
             `;
+                }
             }
-        }
-    };
-
-    window.addEventListener('DOMContentLoaded', () => {
-        fetchRates();
-        setInterval(fetchRates, 1000);
-    });
-
-</script>
+        };
+        window.addEventListener('DOMContentLoaded', () => {
+            fetchRates();
+            setInterval(fetchRates, 1000);
+        });
+    </script>
+    <div th:replace="~{fragments/footer :: footer}"></div>
 </body>
+
 </html>

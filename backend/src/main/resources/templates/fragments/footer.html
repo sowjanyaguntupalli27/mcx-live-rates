@@ -1,0 +1,369 @@
+<div th:fragment="footer">
+  <style>
+    .footer-container {
+      background: linear-gradient(180deg, #1a252f 0%, #11181f 100%);
+      color: #e0e0e0;
+      font-family: 'DM Sans', sans-serif;
+      padding: 4rem 2rem 2rem;
+      position: relative;
+      overflow: hidden;
+      border-top: 1px solid rgba(181, 143, 71, 0.2);
+    }
+
+    .footer-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent 0%, #B58F47 50%, transparent 100%);
+      opacity: 0.6;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 4rem;
+    }
+
+    @media (max-width: 1024px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        text-align: center;
+      }
+    }
+
+    .footer-section {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .footer-heading {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #B58F47;
+      position: relative;
+      display: inline-block;
+      align-self: flex-start;
+    }
+
+    @media (max-width: 600px) {
+      .footer-heading {
+        align-self: center;
+      }
+    }
+
+    .footer-heading::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 30px;
+      height: 2px;
+      background: #E8C872;
+      transition: width 0.3s ease;
+    }
+
+    @media (max-width: 600px) {
+      .footer-heading::after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+
+    .footer-heading:hover::after {
+      width: 50px;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      text-align: left;
+    }
+
+    @media (max-width: 600px) {
+      .footer-links {
+        text-align: center;
+      }
+
+      .footer-links li {
+        justify-content: center;
+      }
+    }
+
+    .footer-links li {
+      margin-bottom: 1rem;
+    }
+
+    .footer-links li a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 300;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .footer-links li a:hover {
+      color: #E8C872;
+      transform: translateX(5px);
+      text-shadow: 0 0 10px rgba(232, 200, 114, 0.3);
+    }
+
+    .app-download-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .app-download-grid {
+        align-items: center;
+      }
+    }
+
+    .store-item {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 600px) {
+      .store-item {
+        align-items: center;
+      }
+    }
+
+    .store-badge {
+      transition: transform 0.3s ease;
+    }
+
+    .store-badge img {
+      border-radius: 6px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .store-badge:hover {
+      transform: scale(1.05);
+    }
+
+    .newsletter-text {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+      text-align: left;
+    }
+
+    @media (max-width: 600px) {
+      .newsletter-text {
+        text-align: center;
+      }
+    }
+
+    .social-links-wrapper {
+      display: flex;
+      gap: 1.2rem;
+    }
+
+    @media (max-width: 600px) {
+      .social-links-wrapper {
+        justify-content: center;
+      }
+    }
+
+    .social-link {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+    }
+
+    .social-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #B58F47, #E8C872);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .social-link:hover {
+      transform: translateY(-5px) scale(1.1);
+      border-color: #B58F47;
+    }
+
+    .social-link:hover::before {
+      opacity: 0.2;
+    }
+
+    .social-link:hover i {
+      transform: scale(1.1);
+      text-shadow: 0 0 5px rgba(181, 143, 71, 0.5);
+    }
+
+    .footer-bottom-bar {
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 600px) {
+      .footer-bottom-bar {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    .copyright-text {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .company-link {
+      color: #B58F47;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .company-link:hover {
+      color: #E8C872;
+      text-decoration: underline;
+    }
+
+    .version-tag {
+      font-size: 0.75rem;
+      color: #B58F47;
+      background: rgba(181, 143, 71, 0.1);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-family: monospace;
+    }
+  </style>
+  <div class="footer-container">
+    <div class="footer-content">
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h3 class="footer-heading">Get To Know Us</h3>
+          <ul class="footer-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/about-us">About Us</a></li>
+            <li><a href="/privacy">Privacy Policy</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3 class="footer-heading">Contact Information</h3>
+          <ul class="footer-links">
+            <li style="display: flex; align-items: flex-start; margin-bottom: 1rem;">
+              <i class="fas fa-map-marker-alt" style="margin-top: 4px; margin-right: 8px; color: #B58F47;"></i>
+              <span
+                style="color: rgba(255, 255, 255, 0.7); font-size: 0.95rem; font-weight: 300; line-height: 1.5; text-align: left;">#
+                B 15 & 16, Industrial Estate, Sanath Nagar Road, Hyderabad, Telangana - 500018</span>
+            </li>
+            <li style="display: flex; align-items: center; margin-bottom: 1rem;">
+              <i class="fas fa-phone-alt" style="margin-right: 8px; color: #B58F47;"></i>
+              <span style="color: rgba(255, 255, 255, 0.7); font-size: 0.95rem; font-weight: 300;">1800-569-7666</span>
+            </li>
+            <li style="display: flex; align-items: center;">
+              <i class="fas fa-envelope" style="margin-right: 8px; color: #B58F47;"></i>
+              <span
+                style="color: rgba(255, 255, 255, 0.7); font-size: 0.95rem; font-weight: 300;">info@viindhyabullion.com</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section app-section">
+          <h3 class="footer-heading">Download Our App</h3>
+          <div class="app-download-grid">
+            <div class="store-item">
+              <a class="store-badge" href="https://play.google.com/store/apps/details?id=com.viindhyagroup.viindhyagold"
+                target="_blank">
+                <img alt="Google Play"
+                  src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" width="140"
+                  height="42" loading="lazy">
+              </a>
+            </div>
+            <div class="store-item">
+              <a class="store-badge" href="https://apps.apple.com/in/app/viindhya-gold/id6751223959" target="_blank">
+                <img alt="App Store"
+                  src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg"
+                  width="140" height="42" loading="lazy">
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-section newsletter-section">
+          <h3 class="footer-heading">Stay Connected</h3>
+          <p class="newsletter-text">Subscribe to our channels for the latest updates and offers.</p>
+          <div class="social-links-wrapper">
+            <a class="social-link facebook" href="https://www.facebook.com/TheViindhyaGold" target="_blank"
+              aria-label="Facebook">
+              <i class="fab fa-facebook-f" style="color: white; font-size: 1.2rem; z-index: 2;"></i>
+            </a>
+            <a class="social-link instagram" href="https://www.instagram.com/viindhyagold" target="_blank"
+              aria-label="Instagram">
+              <i class="fab fa-instagram" style="color: white; font-size: 1.2rem; z-index: 2;"></i>
+            </a>
+            <a class="social-link linkedin" href="https://www.linkedin.com/company/viindhyabullion/" target="_blank"
+              aria-label="LinkedIn">
+              <i class="fab fa-linkedin-in" style="color: white; font-size: 1.2rem; z-index: 2;"></i>
+            </a>
+            <a class="social-link youtube" href="https://www.youtube.com/@ViindhyaGold" target="_blank"
+              aria-label="YouTube">
+              <i class="fab fa-youtube" style="color: white; font-size: 1.2rem; z-index: 2;"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div class="bottom-left">
+          <span class="copyright-text">&copy; 2026 <a href="https://viindhyagroup.com/" target="_blank"
+              class="company-link">VIINDHYA GROUP</a>. All rights reserved.</span>
+        </div>
+        <div class="bottom-right">
+          <span class="version-tag">Application Version : <span
+              th:text="${version != null ? version : '1.0.0'}">1.0.0</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
