@@ -12,10 +12,13 @@ public class PurityRateDto {
     private Purity purity;
     private int purityValue;
     private double ratePerGram;
+    private double bidGramRate;
 
-    public PurityRateDto(Purity purity, double ratePerGram) {
+
+    public PurityRateDto(Purity purity, double ratePerGram, double bidGramRate) {
         this.purity = purity;
         this.purityValue = purity.getValue();
         this.ratePerGram = ratePerGram;
+        this.bidGramRate = bidGramRate;
     }
 }

@@ -21,6 +21,9 @@ public class LiveRateConfig {
     @Column(name = "SPREAD_CHARGES", nullable = false)
     private float spreadCharges;
 
+    @Column(name = "DIFFERENCE", nullable = false)
+    private float difference;
+
     @Column(name = "SYMBOL", nullable = false)
     @Enumerated(EnumType.STRING)
     private Symbol symbol;

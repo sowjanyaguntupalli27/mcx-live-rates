@@ -13,6 +13,8 @@ public class ConfigDto {
 
     private float spreadCharges;
 
+    private float difference;
+
     private int otp;
 
     private Symbol symbol;

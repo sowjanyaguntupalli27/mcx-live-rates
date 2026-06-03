@@ -28,6 +28,8 @@ public class McxRatesController {
         List<McxRatesDto> liveRates = mcxRateConfigService.fetchLiveRates();
         double goldCharges = mcxRateConfigService.getGoldSpreadCharges();
         double silverCharges = mcxRateConfigService.getSilverSpreadCharges();
+        double goldBidDifference = mcxRateConfigService.getGoldDifference();
+        double silverBidDifference = mcxRateConfigService.getSilverDifference();
 
         Map<String, List<PurityRateDto>> completeResponse = new HashMap<>();
 
@@ -35,13 +37,13 @@ public class McxRatesController {
                 .filter(rate -> "GOLD".equalsIgnoreCase(rate.getSymbol()))
                 .findFirst()
                 .ifPresent(gold -> completeResponse.put("gold",
-                        mcxRateConfigService.calculatePurityGramRates(gold, goldCharges)));
+                        mcxRateConfigService.calculatePurityGramRates(gold, goldCharges, goldBidDifference)));
 
         liveRates.stream()
                 .filter(rate -> "SILVER".equalsIgnoreCase(rate.getSymbol()))
                 .findFirst()
                 .ifPresent(silver -> completeResponse.put("silver",
-                        mcxRateConfigService.calculatePurityGramRates(silver, silverCharges)));
+                        mcxRateConfigService.calculatePurityGramRates(silver, silverCharges, silverBidDifference)));
 
         return completeResponse;
     }

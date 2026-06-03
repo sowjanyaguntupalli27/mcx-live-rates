@@ -85,7 +85,18 @@ public class McxRateConfigService {
                 .orElse(0.0F);
     }
 
-    public List<PurityRateDto> calculatePurityGramRates(McxRatesDto rateDto, double spreadCharges) {
+    public double getGoldDifference() {
+        return liveRateConfigRepository.findBySymbol(Symbol.GOLD)
+                .map(LiveRateConfig::getDifference)
+                .orElse(0.0F);
+    }
+
+    public double getSilverDifference() {
+        return liveRateConfigRepository.findBySymbol(Symbol.SILVER)
+                .map(LiveRateConfig::getDifference)
+                .orElse(0.0F);
+    }
+    public List<PurityRateDto> calculatePurityGramRates(McxRatesDto rateDto, double spreadCharges , double difference) {
         List<PurityRateDto> calculationResults = new ArrayList<>();
 
         if (rateDto == null) {
@@ -93,6 +104,7 @@ public class McxRateConfigService {
         }
 
         double totalBasePrice = rateDto.getAsk() + spreadCharges;
+        double bidDifference = totalBasePrice + difference;
         double currentGramRate;
 
         Symbol symbol = Symbol.valueOf(rateDto.getSymbol().toUpperCase());
@@ -109,11 +121,15 @@ public class McxRateConfigService {
                 previousPurityValue = purity.getValue();
             }
 
-            calculationResults.add(new PurityRateDto(purity, roundToTwoDecimals(currentGramRate)));
+            double targetBidDifference = totalBasePrice - difference;
+            double currentBidGramRate = currentGramRate * (targetBidDifference / totalBasePrice);
+
+            calculationResults.add(new PurityRateDto(purity, roundToTwoDecimals(currentGramRate), roundToTwoDecimals(currentBidGramRate)));
         }
 
         return calculationResults;
     }
+
     private double roundToTwoDecimals(double value) {
         return Math.round(value * 100.0) / 100.0;
     }
@@ -122,6 +138,7 @@ public class McxRateConfigService {
         if (config.isPresent()) {
             return ConfigDto.builder()
                     .spreadCharges(config.get().getSpreadCharges())
+                    .difference(config.get().getDifference())
                     .symbol(symbol)
                     .otp(0).build();
         }
@@ -140,10 +157,12 @@ public class McxRateConfigService {
         var config = this.liveRateConfigRepository.findBySymbol(symbol);
         if (config.isPresent()) {
             config.get().setSpreadCharges(Math.abs(configDto.getSpreadCharges()));
+            config.get().setDifference(configDto.getDifference());
             this.liveRateConfigRepository.save(config.get());
         } else {
             var newConfig = LiveRateConfig.builder().symbol(symbol)
-                    .spreadCharges(Math.abs(configDto.getSpreadCharges())).build();
+                    .spreadCharges(Math.abs(configDto.getSpreadCharges()))
+                    .difference(Math.abs(configDto.getDifference())).build();
             this.liveRateConfigRepository.save(newConfig);
         }
         user.setOtp(null);
@@ -186,6 +205,7 @@ public class McxRateConfigService {
     private LiveRateConfig covertToLiveRateConfig(ConfigDto configDto) {
         return LiveRateConfig.builder()
                 .spreadCharges(configDto.getSpreadCharges())
+                .difference(configDto.getDifference())
                 .symbol(configDto.getSymbol())
                 .build();
     }
