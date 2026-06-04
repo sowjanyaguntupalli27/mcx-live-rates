@@ -1,6 +1,5 @@
 package com.vibullion.backend.service;
 
-import com.vibullion.backend.dto.ComparisonResponse;
 import com.vibullion.backend.dto.ConfigDto;
 import com.vibullion.backend.dto.McxRatesDto;
 import com.vibullion.backend.dto.PurityRateDto;
@@ -104,7 +103,6 @@ public class McxRateConfigService {
         }
 
         double totalBasePrice = rateDto.getAsk() + spreadCharges;
-        double bidDifference = totalBasePrice + difference;
         double currentGramRate;
 
         Symbol symbol = Symbol.valueOf(rateDto.getSymbol().toUpperCase());
@@ -169,44 +167,4 @@ public class McxRateConfigService {
         this.userDetailsRepository.save(user);
     }
 
-
-    public ComparisonResponse preview(ConfigDto configDto) {
-        var liveRatesCacheMap = this.fetchLiveRates();
-        if (liveRatesCacheMap == null || liveRatesCacheMap.isEmpty()) {
-            throw new RuntimeException("No liveRates found");
-        }
-
-        var goldConfig = covertToLiveRateConfig(configDto);
-        var silverConfig = this.liveRateConfigRepository.findBySymbol(Symbol.SILVER);
-        if (goldConfig == null || silverConfig.isEmpty()) {
-            throw new RuntimeException("No configuration found");
-        }
-
-        McxRatesDto original = liveRatesCacheMap.get((configDto.getSymbol().equals(Symbol.GOLD) ? Symbol.GOLD : Symbol.SILVER).ordinal());
-        if (original == null) {
-            throw new RuntimeException("No GOLD_SPOT_INR rates found");
-        }
-        McxRatesDto afterChange = McxRatesDto.builder()
-                .symbol(original.getSymbol())
-                .Ask(original.getAsk())
-                .Bid(original.getBid())
-                .LTP(original.getLTP())
-                .Low(original.getLow())
-                .High(original.getHigh())
-                .build();
-
-
-        return ComparisonResponse.builder()
-                .beforeSpotPriceGram24k(original.getAsk())
-                .after(afterChange)
-                .build();
-
-    }
-    private LiveRateConfig covertToLiveRateConfig(ConfigDto configDto) {
-        return LiveRateConfig.builder()
-                .spreadCharges(configDto.getSpreadCharges())
-                .difference(configDto.getDifference())
-                .symbol(configDto.getSymbol())
-                .build();
-    }
 }

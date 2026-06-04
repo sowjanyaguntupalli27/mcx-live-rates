@@ -6,14 +6,9 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-        rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700&display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -27,8 +22,8 @@
                         zinc: { 300: "#D4D4D8" },
                     },
                     fontFamily: {
-                        sans: ["DM Sans", "sans-serif"],
-                        serif: ["Playfair Display", "serif"],
+                        sans: ["Lato", "sans-serif"],
+                        serif: ["Lato", "serif"],
                     },
                 },
             },
@@ -39,7 +34,7 @@
             --bg-body: #f1f6f2;
             --text-dark: #0f241d;
             --text-light: #576d62;
-            --gold-primary: #cda250;
+            --gold-primary: #a37f3a;
             --gold-bright: #dfb76c;
             --gold-light: #f5eedc;
             --green-dark: #3a4851;
@@ -65,13 +60,7 @@
             flex-direction: column;
         }
 
-
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        .serif {
+        h1, h2, h3, h4, h5, .serif {
             font-family: 'Lato', serif;
         }
 
@@ -157,7 +146,7 @@
         }
 
         .rates-table td {
-            padding: 1.25rem 0;
+            padding: 1.25rem 0.5rem;
             border-bottom: 1px solid var(--border-color);
             font-size: 0.85rem;
         }
@@ -175,9 +164,14 @@
             font-weight: 600;
         }
 
-        .col-buy {
+        .price-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
             font-weight: 600;
-            color: var(--text-dark);
+            transition: all 0.3s ease;
         }
 
         .loading {
@@ -201,174 +195,230 @@
 </head>
 
 <body class="relative overflow-x-hidden">
-    <div th:replace="~{fragments/header :: header(activePage='home')}"></div>
+<div th:replace="~{fragments/header :: header(activePage='home')}"></div>
 
-    <div class="main-container">
-        <div class="rates-section" id="rates-container">
-            <div class="loading">
-                <span class="material-symbols-outlined"
-                    style="font-size: 2rem; animation: spin 2s linear infinite;">sync</span>
-                <p style="margin-top: 1rem;">Fetching live rates...</p>
-                <style>
-                    @keyframes spin {
-                        100% {
-                            transform: rotate(360deg);
-                        }
-                    }
-                </style>
-            </div>
+<div class="main-container">
+    <div class="rates-section" id="rates-container">
+        <div class="loading">
+            <span class="material-symbols-outlined" style="font-size: 2rem; animation: spin 2s linear infinite;">sync</span>
+            <p style="margin-top: 1rem;">Fetching live rates...</p>
+            <style>
+                @keyframes spin {
+                    100% { transform: rotate(360deg); }
+                }
+            </style>
         </div>
     </div>
+</div>
 
-    <script>
+<script>
+    // Dictionary tracking historical data for comparison
+    let previousRates = { gold: {}, silver: {} };
 
-        const formatCurrency = (value) => {
-            return new Intl.NumberFormat('en-IN').format(value);
-        };
-        const purityKaratMap = {
-            'PURITY_999': '24k',
-            'PURITY_916': '22k',
-            'PURITY_875': '21k',
-            'PURITY_833': '20k',
-            'PURITY_750': '18k',
-            'PURITY_667': '16k',
-            'PURITY_583': '14k',
-            'PURITY_417': '10k'
-        };
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('en-IN').format(value);
+    };
 
-        const transformPurityText = (item) => {
-            if (!item.purity) return `Purity ${item.purityValue || ''}`;
-            let karatLabel = purityKaratMap[item.purity];
-            if (!karatLabel) {
-                let rawPurity = item.purity.replace('PURITY_', '');
-                karatLabel = parts.map(p => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase()).join(' ');
-            }
-            if (item.purityValue) {
-                return `${karatLabel} / ${item.purityValue}`;
-            }
-            return karatLabel;
-        };
+    const purityKaratMap = {
+        'PURITY_999': '24k',
+        'PURITY_916': '22k',
+        'PURITY_875': '21k',
+        'PURITY_833': '20k',
+        'PURITY_750': '18k',
+        'PURITY_667': '16k',
+        'PURITY_583': '14k',
+        'PURITY_417': '10k'
+    };
 
-        const generateRowsHtml = (data) => {
-            if (!Array.isArray(data)) return '';
-            return data.map(item => {
-                const sell = item.ratePerGram || 0;
-                const buy = item.bidGramRate || 0;
-                const purityLabel = transformPurityText(item);
-                return `
-            <tr>
-                <td class="col-purity">${purityLabel}</td>
-                <td class="col-buy">₹${formatCurrency(sell)}</td>
-                <td class="col-buy">₹${formatCurrency(buy)}</td>
-            </tr>
-        `;
-            }).join('');
-        };
+    const transformPurityText = (item) => {
+        if (!item.purity) return `Purity ${item.purityValue || ''}`;
+        let karatLabel = purityKaratMap[item.purity];
+        if (!karatLabel) {
+            let rawPurity = item.purity.replace('PURITY_', '');
+            let parts = rawPurity.split('_');
+            karatLabel = parts.map(p => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase()).join(' ');
+        }
+        if (item.purityValue) {
+            return `${karatLabel} / ${item.purityValue}`;
+        }
+        return karatLabel;
+    };
 
+    const getPriceRenderingData = (metalType, purity, rateType, currentPrice) => {
+        const previousPrice = previousRates[metalType]?.[purity]?.[rateType];
 
-        const createGoldTable = (data, timeString) => {
-            if (!data || data.length === 0) return '';
+        if (previousPrice === undefined || previousPrice === currentPrice) {
+            return {
+                classes: "bg-blue-50 text-blue-800",
+                icon: "♦"
+            };
+        } else if (currentPrice > previousPrice) {
+            return {
+                classes: "bg-green-100 text-green-800",
+                icon: "▲"
+            };
+        } else {
+            return {
+                classes: "bg-red-100 text-red-800",
+                icon: "▼"
+            };
+        }
+    };
+
+    const generateRowsHtml = (data, metalType) => {
+        if (!Array.isArray(data)) return '';
+        return data.map(item => {
+            const sell = item.ratePerGram || 0;
+            const buy = item.bidGramRate || 0;
+            const purityLabel = transformPurityText(item);
+
+            const sellDisplay = getPriceRenderingData(metalType, item.purity, 'sell', sell);
+            const buyDisplay = getPriceRenderingData(metalType, item.purity, 'buy', buy);
+
             return `
-        <div class="rates-card gold-card">
-            <div class="rates-header">
-                <div class="rates-title">
-                    <span class="material-symbols-outlined">monetization_on</span>
-                    <h2 class="metal-title">Gold Live Rate</h2>
-                </div>
-                <div class="live-updates">Live ${timeString}</div>
-            </div>
-            <table class="rates-table">
-                <thead>
                     <tr>
-                        <th>PURITY</th>
-                        <th>SELL</th>
-                        <th>BUY</th>
+                        <td class="col-purity">${purityLabel}</td>
+                        <td>
+                            <span class="price-badge ${sellDisplay.classes}">
+                                <span class="text-[10px]">${sellDisplay.icon}</span>
+                                ₹${formatCurrency(sell)}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="price-badge ${buyDisplay.classes}">
+                                <span class="text-[10px]">${buyDisplay.icon}</span>
+                                ₹${formatCurrency(buy)}
+                            </span>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    ${generateRowsHtml(data)}
-                </tbody>
-            </table>
-        </div>
-    `;
-        };
+                `;
+        }).join('');
+    };
 
-        const createSilverTable = (data, timeString) => {
-            if (!data || data.length === 0) return '';
-            return `
-        <div class="rates-card silver-card">
-            <div class="rates-header">
-                <div class="rates-title">
-                    <span class="material-symbols-outlined">layers</span>
-                    <h2 class="metal-title">Silver Live Rate</h2>
-                </div>
-                <div class="live-updates">Live ${timeString}</div>
-            </div>
-            <table class="rates-table">
-                <thead>
-                    <tr>
-                        <th>PURITY</th>
-                        <th>SELL</th>
-                        <th>BUY</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${generateRowsHtml(data)}
-                </tbody>
-            </table>
-        </div>
-    `;
-        };
+    const updatePreviousRatesCache = (data) => {
+        if (data.gold && Array.isArray(data.gold)) {
+            data.gold.forEach(item => {
+                if (!previousRates.gold[item.purity]) previousRates.gold[item.purity] = {};
+                previousRates.gold[item.purity].sell = item.ratePerGram || 0;
+                previousRates.gold[item.purity].buy = item.bidGramRate || 0;
+            });
+        }
+        if (data.silver && Array.isArray(data.silver)) {
+            data.silver.forEach(item => {
+                if (!previousRates.silver[item.purity]) previousRates.silver[item.purity] = {};
+                previousRates.silver[item.purity].sell = item.ratePerGram || 0;
+                previousRates.silver[item.purity].buy = item.bidGramRate || 0;
+            });
+        }
+    };
 
-        const fetchRates = async () => {
-            try {
-                const response = await fetch('/mcxRates/purities');
-                if (!response.ok) throw new Error('Data endpoint unreachable');
-                const data = await response.json();
-
-                const container = document.getElementById('rates-container');
-                if (!container) return;
-
-                const hasGold = data && data.gold && Array.isArray(data.gold) && data.gold.length > 0;
-                const hasSilver = data && data.silver && Array.isArray(data.silver) && data.silver.length > 0;
-
-                if (!hasGold && !hasSilver) {
-                    container.innerHTML = `
-                <div class="loading" style="color: var(--text-light); grid-column: 1 / -1;">
-                    <span class="material-symbols-outlined" style="font-size: 2.5rem; color: var(--gold-primary);">trending_flat</span>
-                    <p style="margin-top: 1.25rem;">No active market trades posted for this session.</p>
+    const createGoldTable = (data, timeString) => {
+        if (!data || data.length === 0) return '';
+        return `
+                <div class="rates-card gold-card">
+                    <div class="rates-header">
+                        <div class="rates-title">
+                            <span class="material-symbols-outlined">monetization_on</span>
+                            <h2 class="metal-title">Gold Live Rate</h2>
+                        </div>
+                        <div class="live-updates">Live ${timeString}</div>
+                    </div>
+                    <table class="rates-table">
+                        <thead>
+                            <tr>
+                                <th>PURITY</th>
+                                <th>SELL</th>
+                                <th>BUY</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${generateRowsHtml(data, 'gold')}
+                        </tbody>
+                    </table>
                 </div>
             `;
-                    return;
-                }
+    };
 
-                const now = new Date();
-                const timestamp = `@ ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`;
+    const createSilverTable = (data, timeString) => {
+        if (!data || data.length === 0) return '';
+        return `
+                <div class="rates-card silver-card">
+                    <div class="rates-header">
+                        <div class="rates-title">
+                            <span class="material-symbols-outlined">layers</span>
+                            <h2 class="metal-title">Silver Live Rate</h2>
+                        </div>
+                        <div class="live-updates">Live ${timeString}</div>
+                    </div>
+                    <table class="rates-table">
+                        <thead>
+                            <tr>
+                                <th>PURITY</th>
+                                <th>SELL</th>
+                                <th>BUY</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${generateRowsHtml(data, 'silver')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+    };
 
+    const fetchRates = async () => {
+        try {
+            const response = await fetch('/mcxRates/purities');
+            if (!response.ok) throw new Error('Data endpoint unreachable');
+            const data = await response.json();
+
+            const container = document.getElementById('rates-container');
+            if (!container) return;
+
+            const hasGold = data && data.gold && Array.isArray(data.gold) && data.gold.length > 0;
+            const hasSilver = data && data.silver && Array.isArray(data.silver) && data.silver.length > 0;
+
+            if (!hasGold && !hasSilver) {
                 container.innerHTML = `
-            ${hasGold ? createGoldTable(data.gold, timestamp) : ''}
-            ${hasSilver ? createSilverTable(data.silver, timestamp) : ''}
-        `;
-            } catch (error) {
-                console.error('System Exception Caught on Render:', error);
-                const container = document.getElementById('rates-container');
-                if (container) {
-                    container.innerHTML = `
-                <div class="loading" style="color: var(--red-text); grid-column: 1 / -1;">
-                    <span class="material-symbols-outlined" style="font-size: 2.5rem;">error</span>
-                    <p style="margin-top: 1.25rem; font-weight: 700;">Unable to connect to dynamic rate services.</p>
-                    <p style="font-size: 0.9rem; margin-top: 0.25rem; color: var(--text-light)">Retrying automatically in the background...</p>
-                </div>
-            `;
-                }
+                        <div class="loading" style="color: var(--text-light); grid-column: 1 / -1;">
+                            <span class="material-symbols-outlined" style="font-size: 2.5rem; color: var(--gold-primary);">trending_flat</span>
+                            <p style="margin-top: 1.25rem;">No active market trades posted for this session.</p>
+                        </div>
+                    `;
+                return;
             }
-        };
-        window.addEventListener('DOMContentLoaded', () => {
-            fetchRates();
-            setInterval(fetchRates, 1000);
-        });
-    </script>
-    <div th:replace="~{fragments/footer :: footer}"></div>
+
+            const now = new Date();
+            const timestamp = `@ ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`;
+
+            container.innerHTML = `
+                    ${hasGold ? createGoldTable(data.gold, timestamp) : ''}
+                    ${hasSilver ? createSilverTable(data.silver, timestamp) : ''}
+                `;
+
+            updatePreviousRatesCache(data);
+
+        } catch (error) {
+            console.error('System Exception Caught on Render:', error);
+            const container = document.getElementById('rates-container');
+            if (container) {
+                container.innerHTML = `
+                        <div class="loading" style="color: var(--red-text); grid-column: 1 / -1;">
+                            <span class="material-symbols-outlined" style="font-size: 2.5rem;">error</span>
+                            <p style="margin-top: 1.25rem; font-weight: 700;">Unable to connect to live rates.</p>
+                            <p style="font-size: 0.9rem; margin-top: 0.25rem; color: var(--text-light)">Retrying automatically in the background...</p>
+                        </div>
+                    `;
+            }
+        }
+    };
+
+    window.addEventListener('DOMContentLoaded', () => {
+        fetchRates();
+        setInterval(fetchRates, 1000);
+    });
+</script>
+<div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 
 </html>
